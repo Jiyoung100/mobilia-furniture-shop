@@ -1,0 +1,148 @@
+.wrapper {
+    width: 900px;
+    margin: 70px auto;
+    padding: 0;
+}
+.wrapper h2 {
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.wrapper h5 {
+    margin-bottom: 50px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.signup-section { margin-bottom: 50px; }
+.signup-section h3 {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ddd;
+    font-size: 18px;
+    font-weight: bold;
+}
+.signup-box { display: flex; justify-content: space-between; }
+
+.input-box { width: 48%; margin-bottom: 22px; }
+.input-box > label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.input-box > input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.input-box > input::placeholder { color: #aaa; }
+.input-box > input:focus { border-color: #888; outline: none; }
+.input-box > input[readonly] { background-color: #f8f8f8; }
+.input-box select {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #fff;
+    font-size: 14px;
+}
+.input-box select:invalid { color: #aaa; }
+.input-box select:valid { color: #212529; }
+.input-box select option { color: #212529; }
+.input-box select:focus { border-color: #888; outline: none; }
+.input-box input[type="date"]:invalid { color: #aaa; }
+.input-box input[type="date"]:valid { color: #212529; }
+
+.gender-box {
+    height: 46px;
+    display: flex;
+    align-items: center;
+}
+.radio-style { margin-right: 10px; }
+.radio-style input { display: none; }
+.gender-box .radio-style { margin-bottom: 0; font-weight: normal; }
+.radio-style span {
+    width: 100px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+    font-weight: normal;
+    cursor: pointer;
+}
+.radio-style input:checked + span {
+    border: 2px solid #18181b;
+    color: #18181b;
+    font-weight: bold;
+}
+
+.address-box { display: flex; justify-content: space-between; }
+.address-box input {
+    width: 72%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #f8f8f8;
+    font-size: 14px;
+}
+.address-box input::placeholder { color: #aaa; }
+.address-box input:focus { border-color: #888; outline: none; }
+.address-box .btnAddress {
+    width: 25%;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+    background-color: #18181b;
+    color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.address-box .btnAddress:hover { background-color: #000; }
+
+.join-btn {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 50px;
+}
+.join-btn button {
+    width: 48%;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+    background-color: #18181b;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}
+.join-btn button:hover { background-color: #000; }
+.join-btn a {
+    width: 48%;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+    box-sizing: border-box;
+    background-color: #e9ecef;
+    color: #555;
+    font-size: 15px;
+    line-height: 46px;
+    text-align: center;
+    text-decoration: none;
+}
+.join-btn a:hover { background-color: #dee2e6; color: #333; }
+.text-danger { margin-top: 6px; font-size: 13px; }

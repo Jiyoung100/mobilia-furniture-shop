@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="pagination(paging, baseUrl, queryParams)"
+     th:if="${paging != null and !paging.isEmpty()}"
+     class="d-flex justify-content-center my-5">
+
+    <ul class="pagination">
+        <!-- 1. 처음으로 -->
+        <li class="page-item" th:classappend="${paging.first} ? 'disabled'">
+            <a class="page-link" th:href="@{|${baseUrl}?page=0${queryParams}|}">
+                <i class="bi bi-chevron-double-left"></i>
+            </a>
+        </li>
+        <!-- 2. 이전 -->
+        <li class="page-item" th:classappend="${!paging.hasPrevious} ? 'disabled'">
+            <a class="page-link" th:href="@{|${baseUrl}?page=${paging.number - 1}${queryParams}|}">
+                <i class="bi bi-chevron-left"></i>
+            </a>
+        </li>
+        <!-- 3. 페이지 번호 -->
+        <li class="page-item"
+            th:each="p : ${#numbers.sequence(0, paging.totalPages - 1)}"
+            th:if="${p ge paging.number - 2 and p le paging.number + 2}"
+            th:classappend="${p == paging.number} ? 'active'">
+            <a class="page-link"
+               th:href="@{|${baseUrl}?page=${p}${queryParams}|}"
+               th:text="${p + 1}">1</a>
+        </li>
+        <!-- 4. 다음 -->
+        <li class="page-item" th:classappend="${!paging.hasNext} ? 'disabled'">
+            <a class="page-link" th:href="@{|${baseUrl}?page=${paging.number + 1}${queryParams}|}">
+                <i class="bi bi-chevron-right"></i>
+            </a>
+        </li>
+        <!-- 5. 마지막으로 -->
+        <li class="page-item" th:classappend="${paging.last} ? 'disabled'">
+            <a class="page-link" th:href="@{|${baseUrl}?page=${paging.totalPages - 1}${queryParams}|}">
+                <i class="bi bi-chevron-double-right"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+</html>

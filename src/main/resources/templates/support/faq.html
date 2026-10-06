@@ -1,0 +1,30 @@
+<div class="faq-wrapper">
+	<div class="support-sub-title">
+		<h3>자주 묻는 질문</h3>
+		<p>고객님들께서 자주 문의하시는 내용을 모았습니다.</p>
+	</div>
+	<div class="faq-search">
+		<input type="text" class="faqKeyword" placeholder="궁금한 내용을 검색해보세요.">
+		<button type="button" class="btnFaqSearch">검색</button>
+	</div>
+	<div class="faq-category">
+		<button type="button" class="faqCategory active" data-category="all">전체</button>
+		<button type="button" class="faqCategory" data-category="product">상품</button>
+		<button type="button" class="faqCategory" data-category="order">주문/결제</button>
+		<button type="button" class="faqCategory" data-category="delivery">배송</button>
+		<button type="button" class="faqCategory" data-category="exchange">교환/환불</button>
+		<button type="button" class="faqCategory" data-category="etc">기타</button>
+	</div>
+
+	<!-- /* 게시판 정보 */ -->
+	<div class="faq-list">
+		<th:block th:replace="~{/support/faqList/faqProduct.html}"></th:block>
+		<th:block th:replace="~{/support/faqList/faqOrder.html}"></th:block>
+		<th:block th:replace="~{/support/faqList/faqDelivery.html}"></th:block>
+		<th:block th:replace="~{/support/faqList/faqExchange.html}"></th:block>
+		<th:block th:replace="~{/support/faqList/faqEtc.html}"></th:block>
+	</div>
+	<div class="faq-empty">
+		검색 결과가 없습니다.
+	</div>
+</div>

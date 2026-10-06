@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>고객센터</title>
+	<th:block th:replace="~{/module/link.html}"></th:block>
+	<link rel="stylesheet" th:href="@{/css/question.css}">
+	<link rel="stylesheet" th:href="@{/css/faq.css}">
+	<link rel="stylesheet" th:href="@{/css/qna.css}">
+	<script th:src="@{/js/question.js}"></script>
+	<script th:src="@{/js/faq.js}"></script>
+	<script th:src="@{/js/qna.js}"></script>
+</head>
+<body>
+	<!--/* 상단: 헤더 */-->
+	<th:block th:replace="~{/module/header.html}"></th:block>
+
+	<article class="question-wrapper">
+		<section class="question-title">
+			<h2>고객센터</h2>
+			<h5>궁금한 점이 있으신가요? 빠르고 친절하게 도와드리겠습니다.</h5>
+			<nav class="question-menu">
+				<button type="button" class="btnFaq active">FAQ</button>
+				<button type="button" class="btnQna" th:data-admin="${adminQna}" th:data-login="${login}">Q&A</button>
+			</nav>
+		</section>
+		<section class="faq-section">
+			<th:block th:replace="~{/support/faq.html}"></th:block>
+		</section>
+		<section class="qna-section">
+			<th:block th:replace="~{/support/qna.html}"></th:block>
+		</section>
+	</article>
+
+	<!--/* 하단: 풋터 */-->
+	<th:block th:replace="~{/module/footer.html}"></th:block>
+</body>
+</html>

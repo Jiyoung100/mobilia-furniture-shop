@@ -1,0 +1,193 @@
+.cart-wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 70px auto;
+    padding: 0;
+}
+.cart-title h5 { text-align: center; color: #888; }
+.cart-title h2 { font-weight: bold; text-align: center; }
+.cart-title { margin-bottom: 75px; }
+
+.cart-empty {
+    padding: 80px 0;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+.cart-empty p { margin-bottom: 25px; color: #777; }
+.cart-empty a {
+    width: 160px;
+    height: 46px;
+    display: inline-block;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    color: #555;
+    font-size: 14px;
+    line-height: 46px;
+    text-align: center;
+    text-decoration: none;
+}
+.cart-empty a:hover { background-color: #f8f8f8; }
+.cart-total-count {
+    margin-left: 8px;
+    color: #888;
+    font-size: 13px;
+    font-weight: normal;
+}
+.cart-total-count strong { color: #222; }
+.cart-list-box { border: 1px solid #ddd; border-radius: 6px; }
+.cart-list-top {
+    margin: 0;
+    padding: 20px 25px;
+    border-bottom: 1px solid #ddd;
+}
+.cart-list-top label {
+    margin: 0;
+    font-size: 15px;
+    font-weight: bold;
+}
+.cart-list-top input {
+    width: 18px;
+    height: 18px;
+    margin-right: 8px;
+}
+.form-check-input:checked { background-color: #18181b; border-color: #18181b; }
+.cart-top-btn { display: flex; }
+.cart-top-btn button, .cart-top-btn a {
+    width: 48%;
+    max-width: 130px;
+    height: 38px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    background-color: #fff;
+    color: #555;
+    font-size: 13px;
+    text-align: center;
+}
+.cart-top-btn button { margin-right: 10px; cursor: pointer; }
+.cart-top-btn a { line-height: 38px; text-decoration: none; }
+.cart-top-btn button:hover, .cart-top-btn a:hover { background-color: #f8f8f8; }
+.cart-item {
+    margin: 0;
+    padding: 20px 10px;
+    border-bottom: 1px solid #ddd;
+}
+.cart-item:last-child { border-bottom: none; }
+.cart-check { text-align: center; }
+.cart-check input { width: 18px; height: 18px; }
+
+.cart-image-box { text-align: center; }
+.cart-img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+}
+
+.cart-product-info h3 {
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: bold;
+}
+.cart-product-info h3 a { color: #18181b; text-decoration: none; }
+.cart-product-info p {
+    margin-bottom: 6px;
+    color: #888;
+    font-size: 14px;
+}
+.cart-quantity-box { text-align: center; }
+.cart-quantity {
+    width: 75px;
+    margin: 0 auto;
+    text-align: center;
+}
+.cart-quantity::-webkit-inner-spin-button, .cart-quantity::-webkit-outer-spin-button { opacity: 1; }
+
+.cart-price {
+    font-size: 17px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.cart-item-btn { text-align: center; }
+.cart-item-btn button {
+    width: 95px;
+    height: 38px;
+    border-radius: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.btnOrderOne {
+    border: none;
+    background-color: #18181b;
+    color: #fff;
+}
+.btnOrderOne:hover { background-color: #000; }
+.btnDelete {
+    border: 1px solid #ddd;
+    background-color: #fff;
+    color: #555;
+}
+.btnDelete:hover { background-color: #f8f8f8; }
+
+.cart-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 30px 50px;
+    border-radius: 6px;
+    background-color: #f8f8f8;
+}
+
+.summary-box { text-align: center; }
+.summary-box span {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 14px;
+}
+.summary-box strong { font-size: 24px; font-weight: bold; }
+.summary-sign {
+    text-align: center;
+    font-size: 24px;
+}
+
+.summary-total strong { font-size: 28px; }
+
+.cart-bottom-btn {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    margin-bottom: 100px;
+}
+.bottom-ceter-btn {
+    width: 100%;
+    max-width: 415px;
+    display: flex;
+}
+.bottom-ceter-btn {
+    width: 100%;
+    max-width: 415px;
+    display: flex;
+}
+.cart-bottom-btn button {
+    width: 50%;
+    height: 46px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.btnOrderSelect {
+    margin-right: 15px;
+    border: 1px solid #18181b;
+    background-color: #fff;
+    color: #18181b;
+}
+.btnOrderSelect:hover { background-color: #f8f8f8; }
+.btnOrderAll {
+    border: none;
+    background-color: #18181b;
+    color: #fff;
+}
+.btnOrderAll:hover { background-color: #000; }

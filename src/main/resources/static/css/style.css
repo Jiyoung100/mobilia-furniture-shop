@@ -1,0 +1,37 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css");
+body { font-family: "Pretendard Variable", Pretendard, sans-serif; }
+@media (max-width: 1199.98px) {
+    body {
+        padding-bottom: 70px;
+    }
+}
+a { text-decoration: none; color: #222; }
+input::placeholder, textarea::placeholder { font-size: 13px; color: #aaa !important; }
+
+.wrapper { width: 90%; max-width: 1200px; margin: 0 auto; }
+
+/* 카테고리 버튼 */
+.category-btn-wrap .btn {
+    padding: 5px 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0;
+    transition: all 0.2s ease;
+}
+.category-btn-wrap .btn:hover, .category-btn-wrap .btn-secondary {
+    background-color: #552F13;
+    border-color: #552F13;
+}
+
+/* 페이지네이션 */
+.pagination .page-item .page-link { border: none; color: #222; background-color: transparent; }
+.pagination .page-item.active .page-link {
+    background-color: #552F13;
+    border-color: #552F13;
+    color: #fff;
+}
+.pagination .page-item:not(.active) .page-link:hover {
+    color: #552F13;
+    background-color: transparent;
+}
+.pagination .page-item .page-link i { font-size: 12px; }

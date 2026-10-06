@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="~{module/link.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/adminOrderDetail.css}">
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script th:src="@{/js/searchAddress.js}"></script>
+    <title>관리자 - 주문 상세 및 수정</title>
+</head>
+<body>
+<div class="admin-layout">
+    <!--/* 왼쪽 : 사이드바 */-->
+    <th:block th:replace="~{/module/adminSidebar.html}"></th:block>
+
+    <article class="wrapper">
+        <div class="detail-header-row">
+            <div>
+                <h3>주문 상세 정보</h3>
+                <p class="text-muted small mb-0">주문 정보 및 배송/주문자 정보를 확인하고 수정할 수 있습니다.</p>
+            </div>
+            <a th:href="@{/orders/admin/list}" class="btn-back">
+                <i class="bi bi-arrow-left"></i> 목록으로 돌아가기
+            </a>
+        </div>
+
+        <form th:action="@{/orders/admin/updateCustomerDetail}" method="post" id="orderDetailForm">
+            <!-- DB 식별용 주문 PK (Hidden) -->
+            <input type="hidden" name="id" th:value="${order.id}">
+
+            <!-- 1. 기본 주문 개요 카드 -->
+            <div class="detail-card order-overview-card">
+                <div class="detail-card-header">
+                    <h5>기본 주문 정보</h5>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="order-status-badge"
+                              th:classappend="|status-${order.status != null ? order.status : ''}|"
+                              th:text="${order.status != null ? order.status : '-'}"></span>
+                        <span th:if="${order.delivery != null and order.status != '주문취소' and order.status != 'CANCEL'}"
+                              class="delivery-status-badge"
+                              th:classappend="|status-${order.delivery.status}|"
+                              th:text="${order.delivery.status}"></span>
+                    </div>
+                </div>
+                <div class="detail-card-body">
+                    <div class="overview-grid">
+                        <div class="overview-item">
+                            <span class="overview-label">주문번호</span>
+                            <span class="overview-value" th:text="${order.id}"></span>
+                        </div>
+                        <div class="overview-item">
+                            <span class="overview-label">주문일시</span>
+                            <span class="overview-value" th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm:ss')}"></span>
+                        </div>
+                        <div class="overview-item" th:if="${order.delivery != null and order.delivery.deliveryDate != null}">
+                            <span class="overview-label">배송완료일</span>
+                            <span class="overview-value text-success" th:text="${#temporals.format(order.delivery.deliveryDate, 'yyyy-MM-dd HH:mm')}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. 주문/배송 상태 변경 카드 -->
+            <div class="detail-card">
+                <div class="detail-card-header">
+                    <h5>상태 관리</h5>
+                </div>
+                <div class="detail-card-body">
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label>주문상태</label>
+                            <select name="status" class="form-select">
+                                <option value="주문완료" th:selected="${order.status == '주문완료'}">주문완료</option>
+                                <option value="주문취소" th:selected="${order.status == '주문취소'}">주문취소</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>배송상태</label>
+                            <select name="delivery.status" class="form-select">
+                                <option value="상품준비중" th:selected="${order.delivery != null and order.delivery.status == '상품준비중'}">상품준비중</option>
+                                <option value="배송중" th:selected="${order.delivery != null and order.delivery.status == '배송중'}">배송중</option>
+                                <option value="배송완료" th:selected="${order.delivery != null and order.delivery.status == '배송완료'}">배송완료</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 주문 상품 정보 카드 (대표 상품 이미지, 명칭 외 n개 처리) -->
+            <div class="detail-card">
+                <div class="detail-card-header">
+                    <h5>주문 상품 정보</h5>
+                    <span class="text-muted small" th:if="${order.orderItems != null}"
+                          th:text="|총 ${#lists.size(order.orderItems)}개 품목|"></span>
+                </div>
+                <div class="detail-card-body">
+                    <div th:if="${order.orderItems != null and !order.orderItems.isEmpty()}">
+                        <!-- 첫번째 상품 사진, 이름(외 n개), 가격 -->
+                        <div class="main-product-box">
+                            <img th:if="${order.orderItems[0].product != null and order.orderItems[0].product.fileName1 != null}"
+                                 th:src="@{|/images/${order.orderItems[0].product.fileName1}|}"
+                                 alt="상품 이미지"
+                                 class="product-img">
+                            <div class="product-meta">
+                                <div class="product-name-title">
+                                    <span th:if="${#lists.size(order.orderItems) == 1}"
+                                          th:text="${order.orderItems[0].product.name}"></span>
+                                    <span th:if="${#lists.size(order.orderItems) > 1}"
+                                          th:text="|${order.orderItems[0].product.name} 외 ${#lists.size(order.orderItems) - 1}개|"></span>
+                                </div>
+                                <div class="product-price-desc"
+                                     th:text="|단가: ${#numbers.formatInteger(order.orderItems[0].orderPrice, 0, 'COMMA')}원 / 수량: ${order.orderItems[0].count}개|">
+                                </div>
+                            </div>
+                            <div class="product-price-total"
+                                 th:text="|${#numbers.formatInteger(order.orderItems[0].totalPrice != 0 ? order.orderItems[0].totalPrice : order.orderItems[0].orderPrice * order.orderItems[0].count, 0, 'COMMA')}원|">
+                            </div>
+                        </div>
+
+                        <!-- 품목 전체 상세 보기 (목록 토글) -->
+                        <details class="items-table-wrapper" th:if="${#lists.size(order.orderItems) > 1}">
+                            <summary>전체 주문 품목 상세 내역 보기 (클릭)</summary>
+                            <table class="items-table">
+                                <thead>
+                                <tr>
+                                    <th>번호</th>
+                                    <th>이미지</th>
+                                    <th>상품명</th>
+                                    <th>가격</th>
+                                    <th>수량</th>
+                                    <th>합계</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="item, stat : ${order.orderItems}">
+                                    <td th:text="${stat.count}"></td>
+                                    <td>
+                                        <img th:if="${item.product != null and item.product.fileName1 != null}"
+                                             th:src="@{|/images/${item.product.fileName1}|}"
+                                             alt="상품" style="width: 45px; height: 45px; object-fit: cover; border-radius: 4px;">
+                                    </td>
+                                    <td class="text-left fw-semibold" th:text="${item.product != null ? item.product.name : '-'}"></td>
+                                    <td th:text="|${#numbers.formatInteger(item.orderPrice, 0, 'COMMA')}원|"></td>
+                                    <td th:text="${item.count}"></td>
+                                    <td class="fw-bold" th:text="|${#numbers.formatInteger(item.totalPrice != 0 ? item.totalPrice : item.orderPrice * item.count, 0, 'COMMA')}원|"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </details>
+                    </div>
+                    <div th:if="${order.orderItems == null or order.orderItems.isEmpty()}" class="text-muted text-center py-3">
+                        주문 상품 정보가 없습니다.
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 주문자 정보 수정 카드 -->
+            <div class="detail-card">
+                <div class="detail-card-header">
+                    <h5>주문자 정보</h5>
+                </div>
+                <div class="detail-card-body">
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label>회원 ID</label>
+                            <input type="text" name="orderCustomer.customerId"
+                                   th:value="${order.orderCustomer != null ? order.orderCustomer.customerId : ''}"
+                                   class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>주문자 이름</label>
+                            <input type="text" name="orderCustomer.name"
+                                   th:value="${order.orderCustomer != null ? order.orderCustomer.name : ''}"
+                                   class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>주문자 전화번호</label>
+                            <input type="text" name="orderCustomer.phone"
+                                   th:value="${order.orderCustomer != null ? order.orderCustomer.phone : ''}"
+                                   class="form-control" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 5. 수령인 및 배송 정보 수정 카드 -->
+            <div class="detail-card">
+                <div class="detail-card-header">
+                    <h5>수령인 및 배송 정보 수정</h5>
+                </div>
+                <div class="detail-card-body">
+                    <input type="hidden" name="delivery.address.country"
+                           th:value="${order.delivery != null and order.delivery.address != null and order.delivery.address.country != null ? order.delivery.address.country : '대한민국'}">
+
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label>수령인 이름</label>
+                            <input type="text" name="delivery.receiverName"
+                                   th:value="${order.delivery != null ? order.delivery.receiverName : ''}"
+                                   class="form-control" placeholder="수령인 이름"
+                                   th:readonly="${order.delivery == null or order.delivery.status != '상품준비중'}">
+                        </div>
+                        <div class="form-group">
+                            <label>수령인 연락처</label>
+                            <input type="text" name="delivery.receiverPhone"
+                                   th:value="${order.delivery != null ? order.delivery.receiverPhone : ''}"
+                                   class="form-control" placeholder="010-1234-5678"
+                                   th:readonly="${order.delivery == null or order.delivery.status != '상품준비중'}">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label>우편번호</label>
+                            <div class="address-search-group">
+                                <input type="text" name="delivery.address.zipcode"
+                                       th:value="${order.delivery != null and order.delivery.address != null ? order.delivery.address.zipcode : ''}"
+                                       class="form-control zipcode" readonly>
+                                <button type="button" class="btn-address btnAddress"
+                                        th:disabled="${order.delivery == null or order.delivery.status != '상품준비중'}">우편번호 검색</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-grid-row">
+                        <div class="form-group">
+                            <label>기본주소</label>
+                            <input type="text" name="delivery.address.basicAddress"
+                                   th:value="${order.delivery != null and order.delivery.address != null ? order.delivery.address.basicAddress : ''}"
+                                   class="form-control basicAddress" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>상세주소</label>
+                            <input type="text" name="delivery.address.detailAddress"
+                                   th:value="${order.delivery != null and order.delivery.address != null ? order.delivery.address.detailAddress : ''}"
+                                   class="form-control detailAddress" placeholder="상세주소를 입력해주세요."
+                                   th:readonly="${order.delivery == null or order.delivery.status != '상품준비중'}">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 6. 결제 금액 정보 카드 -->
+            <div class="detail-card total-payment-card">
+                <div class="detail-card-body">
+                    <div class="total-payment-box">
+                        <span class="total-payment-title">총 결제 금액</span>
+                        <span class="total-payment-amount"
+                              th:text="|${#numbers.formatInteger(totalPrice != null ? totalPrice : order.totalPrice, 0, 'COMMA')}원|"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. 하단 버튼 영역 -->
+            <div class="form-action-bar">
+                <a th:href="@{/orders/admin/list}" class="btn-cancel-link">취소</a>
+                <button type="submit" class="btn-submit-save"
+                        onclick="return confirm('주문 상세 정보를 수정하시겠습니까?');">정보 수정</button>
+            </div>
+        </form>
+    </article>
+</div>
+</body>
+</html>

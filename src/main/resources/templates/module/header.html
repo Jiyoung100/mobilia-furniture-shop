@@ -1,0 +1,287 @@
+<header xmlns:sec="http://www.w3.org/1999/xhtml" class="sticky-top">
+    <nav class="navbar navbar-expand-xl navbar-light bg-white border-bottom py-3">
+        <div class="container-fluid">
+            <!--/* 상단 영역 */-->
+            <div class="d-flex w-100 align-items-center ms-3">
+                <a th:href="@{/}" class="navbar-brand">
+                    <img th:src="@{/images/MOBILIA_wordmark.svg}" alt="logo" class="brand-logo">
+                </a>
+                <!--/* PC 메뉴 */-->
+                <ul class="navbar-nav d-none d-xl-flex ms-4 fw-bold gap-3 pc-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/products/all}">모든 상품</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            공간별 가구
+                        </a>
+                        <ul class="dropdown-menu category1-menu" aria-labelledby="navbarDropdownMenuLink1">
+                            <li><a class="dropdown-item" th:href="@{/products/category/거실}">거실</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/다이닝}">다이닝</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/침실}">침실</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/욕실}">욕실</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/키즈룸}">키즈룸</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/홈오피스}">홈오피스</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/현관}">현관</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/category/베란다}">베란다</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLin2k" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            브랜드
+                        </a>
+                        <ul class="dropdown-menu category1-menu" aria-labelledby="navbarDropdownMenuLink2">
+                            <li><a class="dropdown-item" th:href="@{/products/brand/IKEA}">IKEA</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/brand/한샘}">한샘</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/brand/리바트}">리바트</a></li>
+                            <li><a class="dropdown-item" th:href="@{/products/brand/일룸}">일룸</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/products/new}">신상품</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/support}">고객센터</a>
+                    </li>
+                </ul>
+
+                <!--/* 오른쪽 메뉴 */-->
+                <div class="d-none d-xl-flex align-items-center gap-3 ms-auto me-3">
+                    <!--/* 상단 검색바 */-->
+                    <form th:action="@{/products/search}" method="get" class="ms-auto me-2">
+                        <div class="input-group border border-secondary">
+                            <input type="text" name="keyword" th:value="${keyword}" class="form-control border-0 shadow-none keyword" placeholder="찾으시는 상품을 검색하세요">
+                            <button class="btn border-0 shadow-none btn-search" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <!--/* 로그인,로그아웃,회원가입,마이페이지,장바구니 */-->
+                    <div class="d-flex gap-3 nav-right">
+                        <a sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/products/admin/list}" class="d-flex flex-column align-items-center text-dark">
+                            <i class="bi bi-gear"></i>
+                            <span>관리자 페이지</span>
+                        </a>
+                        <a sec:authorize="isAnonymous()" th:href="@{/login}" class="d-flex flex-column align-items-center text-dark">
+                            <i class="bi bi-box-arrow-in-right"></i>
+                            <span>로그인</span>
+                        </a>
+                        <a sec:authorize="isAnonymous()" th:href="@{/customers/signup}" class="d-flex flex-column align-items-center text-dark">
+                            <i class="bi bi-person-add"></i>
+                            <span>회원가입</span>
+                        </a>
+                        <a sec:authorize="isAuthenticated()" th:href="@{/customers/profile}"
+                           class="d-flex flex-column align-items-center text-dark">
+                            <i class="bi bi-person-circle"></i>
+                            <span>마이페이지</span>
+                        </a>
+                        <a sec:authorize="isAuthenticated()" th:href="@{/logout}"
+                           class="d-flex flex-column align-items-center text-dark">
+                            <i class="bi bi-box-arrow-left"></i>
+                            <span>로그아웃</span>
+                        </a>
+                        <a sec:authorize="!hasAnyRole('ADMIN', 'MANAGER')" th:href="@{|/cart/read/${#authentication.name}|}" class="d-flex flex-column align-items-center text-dark">
+                            <div class="position-relative">
+                                <i class="bi bi-cart3"></i>
+                                <span class="position-absolute badge rounded-circle cart-count">
+                                    <span th:text="${cartCount}" class="cart-count-num">0</span>
+                                </span>
+                            </div>
+                            <span>장바구니</span>
+                        </a>
+                        <a sec:authorize="hasRole('USER')" th:href="@{/orders}" class="d-flex flex-column align-items-center text-dark">
+                            <i class="bi bi-bag-check"></i>
+                            <span>주문조회</span>
+                        </a>
+                    </div>
+                </div>
+                <!--/* 햄버거 버튼 */-->
+                <a class="d-xl-none ms-auto" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </a>
+            </div>
+
+            <!--/* 모바일 햄버거 메뉴 */-->
+            <div class="offcanvas offcanvas-end d-xl-none" id="mobileMenu">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!--/* 검색창 */-->
+                    <h5 class="m-menu-title">상품 검색</h5>
+                    <form th:action="@{/products/search}" method="get" class="ms-auto me-2 pb-4">
+                        <div class="input-group border border-secondary">
+                            <input type="text" name="keyword" th:value="${keyword}" class="form-control border-0 shadow-none keyword" placeholder="찾으시는 상품을 검색하세요" style="font-size: 14px;">
+                            <button class="btn border-0 shadow-none btn-search" type="submit">
+                                <i class="bi bi-search"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <a th:href="@{/products/all}" class="m-menu-title border-top">
+                        모든 상품
+                    </a>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#livingMenu">
+                        <span>거실</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="livingMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/거실}">전체보기</a>
+                            <a th:href="@{/products/category/거실(category2='소파')}">소파</a>
+                            <a th:href="@{/products/category/거실(category2='수납장')}">수납장</a>
+                            <a th:href="@{/products/category/거실(category2='거실테이블')}">거실테이블</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#diningMenu">
+                        <span>다이닝</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="diningMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/다이닝}">전체보기</a>
+                            <a th:href="@{/products/category/다이닝(category2='식탁')}">식탁</a>
+                            <a th:href="@{/products/category/다이닝(category2='식탁의자')}">식탁의자</a>
+                            <a th:href="@{/products/category/다이닝(category2='거실장')}">거실장</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#bedroomMenu">
+                        <span>침실</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="bedroomMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/침실}">전체보기</a>
+                            <a th:href="@{/products/category/침실(category2='침대')}">침대</a>
+                            <a th:href="@{/products/category/침실(category2='옷장')}">옷장</a>
+                            <a th:href="@{/products/category/침실(category2='침구')}">침구</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#bathroomMenu">
+                        <span>욕실</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="bathroomMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/욕실}">전체보기</a>
+                            <a th:href="@{/products/category/욕실(category2='세면대하부장')}">세면대하부장</a>
+                            <a th:href="@{/products/category/욕실(category2='욕실시스템')}">욕실시스템</a>
+                            <a th:href="@{/products/category/욕실(category2='샤워용품')}">샤워용품</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#kidsRoomMenu">
+                        <span>키즈룸</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="kidsRoomMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/키즈룸}">전체보기</a>
+                            <a th:href="@{/products/category/키즈룸(category2='영유아 가구')}">영유아 가구</a>
+                            <a th:href="@{/products/category/키즈룸(category2='장난감정리함')}">장난감정리함</a>
+                            <a th:href="@{/products/category/키즈룸(category2='영유아 침대')}">영유아 침대</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#homeOfficeMenu">
+                        <span>홈오피스</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="homeOfficeMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/홈오피스}">전체보기</a>
+                            <a th:href="@{/products/category/홈오피스(category2='컴퓨터책상')}">컴퓨터책상</a>
+                            <a th:href="@{/products/category/홈오피스(category2='의자')}">의자</a>
+                            <a th:href="@{/products/category/홈오피스(category2='책상조명')}">책상조명</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#porchMenu">
+                        <span>현관</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="porchMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/현관}">전체보기</a>
+                            <a th:href="@{/products/category/현관(category2='신발장')}">신발장</a>
+                            <a th:href="@{/products/category/현관(category2='수납장')}">수납장</a>
+                            <a th:href="@{/products/category/현관(category2='옷걸이/행거')}">옷걸이/행거</a>
+                        </div>
+                    </div>
+                    <button class="category-btn border-top" data-bs-toggle="collapse" data-bs-target="#verandaMenu">
+                        <span>베란다</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="verandaMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/category/베란다}">전체보기</a>
+                            <a th:href="@{/products/category/베란다(category2='야외용 테이블')}">야외용 테이블</a>
+                            <a th:href="@{/products/category/베란다(category2='야외용 의자')}">야외용 의자</a>
+                            <a th:href="@{/products/category/베란다(category2='옷걸이/행거')}">야외용 소파</a>
+                        </div>
+                    </div>
+                    <button class="m-menu-title brand-category border-top" data-bs-toggle="collapse" data-bs-target="#brandMenu">
+                        <span>브랜드</span>
+                        <i class="bi bi-chevron-down"></i>
+                    </button>
+                    <div class="collapse" id="brandMenu">
+                        <div class="sub-category">
+                            <a th:href="@{/products/brand/IKEA}">이케아</a>
+                            <a th:href="@{/products/brand/한샘}">한샘</a>
+                            <a th:href="@{/products/brand/리바트}">리바트</a>
+                            <a th:href="@{/products/brand/일룸}">일룸</a>
+                        </div>
+                    </div>
+                    <a th:href="@{/products/new}" class="m-menu-title border-top">
+                        신상품
+                    </a>
+                    <a th:href="@{/support}" class="m-menu-title border-top">
+                        고객센터
+                    </a>
+                </div>
+            </div>
+
+            <!--/* 모바일 하단 메뉴 */-->
+            <div class="d-flex d-xl-none bg-white fixed-bottom border-top align-items-center justify-content-center gap-5 mobile-menu">
+                <a sec:authorize="hasAnyRole('ADMIN','MANAGER')" th:href="@{/products/admin/list}" class="d-flex flex-column align-items-center text-dark">
+                    <i class="bi bi-gear"></i>
+                    <span>관리자 페이지</span>
+                </a>
+                <a sec:authorize="isAnonymous()" th:href="@{/login}" class="d-flex flex-column align-items-center text-dark">
+                    <i class="bi bi-box-arrow-in-right"></i>
+                    <span>로그인</span>
+                </a>
+                <a sec:authorize="isAnonymous()" th:href="@{/customers/signup}" class="d-flex flex-column align-items-center text-dark">
+                    <i class="bi bi-person-add"></i>
+                    <span>회원가입</span>
+                </a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/customers/profile}"
+                   class="d-flex flex-column align-items-center text-dark">
+                    <i class="bi bi-person-circle"></i>
+                    <span>마이페이지</span>
+                </a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/logout}"
+                   class="d-flex flex-column align-items-center text-dark">
+                    <i class="bi bi-box-arrow-left"></i>
+                    <span>로그아웃</span>
+                </a>
+                <a sec:authorize="!hasAnyRole('ADMIN', 'MANAGER')" th:href="@{|/cart/read/${#authentication.name}|}" class="d-flex flex-column align-items-center text-dark">
+                    <div class="position-relative">
+                        <i class="bi bi-cart3"></i>
+                        <span class="position-absolute badge rounded-circle cart-count">
+                            <span th:text="${cartCount}" class="cart-count-num">0</span>
+                        </span>
+                    </div>
+                    <span>장바구니</span>
+                </a>
+                <a sec:authorize="hasRole('USER')" th:href="@{/orders}" class="d-flex flex-column align-items-center text-dark">
+                    <i class="bi bi-bag-check"></i>
+                    <span>주문조회</span>
+                </a>
+                <!--/* 검색창 */-->
+                <a href="#" class="d-flex flex-column align-items-center text-dark"
+                        data-bs-toggle="offcanvas" data-bs-target="#mobileMenu" aria-controls="mobileMenu">
+                    <i class="bi bi-search"></i>
+                    <span>검색</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>

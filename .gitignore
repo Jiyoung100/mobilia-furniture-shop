@@ -1,0 +1,53 @@
+# 빌드 결과
+.gradle/
+build/
+out/
+bin/
+
+# 개인 IDE 설정
+.idea/
+*.iml
+.classpath
+.project
+.settings/
+
+# 로그
+*.log
+
+# 비밀 설정
+.env
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/application.yaml
+
+HELP.md
+.gradle
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### STS ###
+.apt_generated
+.factorypath
+.settings
+.springBeans
+.sts4-cache
+!**/src/main/**/bin/
+!**/src/test/**/bin/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.ipr
+!**/src/main/**/out/
+!**/src/test/**/out/
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+### VS Code ###
+.vscode/

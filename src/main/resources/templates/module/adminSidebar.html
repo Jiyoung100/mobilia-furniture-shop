@@ -1,0 +1,101 @@
+    <div class="admin-layout">
+        <!--/* PC 사이드바 */-->
+        <div class="admin-sidebar d-none d-lg-flex flex-column">
+            <!--/* 로고 */-->
+            <div class="admin-logo">
+                <a th:href="@{/products/admin/list}" class="text-decoration-none">
+                    <img th:src="@{/images/MOBILIA_wordmark.svg}" alt="">
+                    <h6>ADMIN</h6>
+                </a>
+            </div>
+            <div class="admin-auth">
+                <a sec:authorize="isAuthenticated()" th:href="@{/customers/profile}" class="small text-secondary">
+                    <span sec:authentication="name"></span>님
+                </a>
+            </div>
+            <!--/* 메뉴 */-->
+            <nav class="admin-menu flex-grow-1">
+                <a th:href="@{/products/admin/list}" class="admin-menu-link">
+                    상품 목록
+                </a>
+                <a th:href="@{/products/admin/add}" class="admin-menu-link">
+                    상품 등록
+                </a>
+                <a th:href="@{/customers/admin/list}" class="admin-menu-link">
+                    회원 목록
+                </a>
+                <a th:href="@{/orders/admin/list}" class="admin-menu-link">
+                    주문 목록
+                </a>
+            </nav>
+            <!--/* 하단 */-->
+            <div class="admin-sidebar-bottom">
+                <a th:href="@{/}" class="admin-menu-link">
+                    <i class="bi bi-house-door me-2"></i>
+                    쇼핑몰로 이동
+                </a>
+                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="admin-menu-link">
+                    <i class="bi bi-box-arrow-left me-2"></i>
+                    로그아웃
+                </a>
+            </div>
+        </div>
+
+        <!--/* 모바일 상단 메뉴 */-->
+        <div class="admin-mobile-header sticky-top d-lg-none">
+            <nav class="navbar bg-white border-bottom">
+                <div class="container-fluid px-3">
+                    <!--/* 로고 */-->
+                    <a th:href="@{/products/admin/list}" class="admin-mobile-brand">
+                        <img th:src="@{/images/MOBILIA_wordmark.svg}" alt="MOBILIA">
+                        <span>ADMIN</span>
+                    </a>
+
+                    <!--/* 햄버거 버튼 */-->
+                    <button type="button" class="admin-mobile-toggle"
+                            data-bs-toggle="offcanvas" data-bs-target="#adminMobileMenu"
+                            aria-controls="adminMobileMenu" aria-label="관리자 메뉴 열기">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+            </nav>
+
+            <!--/* 펼쳐지는 메뉴 */-->
+            <main class="wrapper">
+                <div class="offcanvas offcanvas-end" tabindex="-1" id="adminMobileMenu"
+                     aria-labelledby="adminMobileMenuLabel">
+                    <div class="offcanvas-header border-bottom">
+                        <h5 class="offcanvas-title fw-bold" id="adminMobileMenuLabel">
+                            관리자 메뉴
+                        </h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="닫기"></button>
+                    </div>
+
+                    <div class="offcanvas-body">
+                        <div sec:authorize="isAuthenticated()" class="small text-secondary mb-3">
+                            <span sec:authentication="name"></span>님
+                        </div>
+
+                        <nav class="admin-mobile-links">
+                            <a th:href="@{/products/admin/list}">상품 목록</a>
+                            <a th:href="@{/products/admin/add}">상품 등록</a>
+                            <a th:href="@{/customers/admin/list}">회원 목록</a>
+                            <a th:href="@{/orders/admin/list}">주문 목록</a>
+                        </nav>
+
+                        <div class="admin-mobile-links border-top mt-3 pt-3">
+                            <a th:href="@{/}">
+                                <i class="bi bi-house-door me-2"></i>
+                                쇼핑몰로 이동
+                            </a>
+                            <a sec:authorize="isAuthenticated()" th:href="@{/logout}">
+                                <i class="bi bi-box-arrow-left me-2"></i>
+                                로그아웃
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+

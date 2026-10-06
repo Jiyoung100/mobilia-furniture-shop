@@ -1,0 +1,55 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '4.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.myapp'
+version = '0.0.1-SNAPSHOT'
+description = 'Shop02'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    // repository를 테스트하기 위한 라이브러리
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    // String Boot Actuator 설정: 운영환경에서 애플리케이션의 상태를 모니터링하고 관리할 수 있는 기능을 제공
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    // lombok 설정: 자바 클래스의 멤버변수에 대한 생성자, getter/setter, toString() 등의 메소드를 자동으로 생성
+    // - 롬복은 컴파일할 때만, 어노테이션을 분석하여 실행하도록 함
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+    // devtools 설정: 프로젝트의 변경사항을 저장하면 자동으로 tomcat 서버가 동작하도록 하는 기능
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    // thymeleaf
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    testImplementation 'org.springframework.boot:spring-boot-starter-thymeleaf-test'
+    // layout 템플릿 사용
+    implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect'
+    // MySQL DB 설정
+    implementation 'com.mysql:mysql-connector-j'
+    // JPA 설정
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    // Spring Boot Validateion 설정 - 폼 유효성 검증
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    // SpringSecurity
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

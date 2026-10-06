@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="~{module/link.html}"></th:block>
+    <title>주문 / 결제</title>
+</head>
+<body>
+    <th:block th:replace="~{module/header.html}"></th:block>
+
+    <div class="wrapper py-5 mt-4 mb-5">
+        <h3 class="fw-bold text-center mb-4">주문 / 결제</h3>
+
+        <form th:action="@{/order/process}" method="post">
+            <!-- 1. 주문 타입 식별 (DIRECT 또는 CART) -->
+            <input type="hidden" name="orderType" th:value="${orderType}">
+
+            <!-- 바로구매인 경우 전달할 hidden 파라미터 -->
+            <th:block th:if="${orderType == 'DIRECT'}">
+                <input type="hidden" name="productId" th:value="${productId}">
+                <input type="hidden" name="count" th:value="${count}">
+            </th:block>
+
+            <!-- 장바구니 주문인 경우 전달할 hidden 파라미터들 -->
+            <th:block th:if="${orderType == 'CART'}">
+                <input type="hidden" th:each="id : ${cartItemIds}" name="cartItemIds" th:value="${id}">
+            </th:block>
+
+            <!-- 2. 주문 상품 확인 카드 (1건이든 여러 건이든 반복 출력) -->
+            <div class="card mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="fw-bold mb-0">주문 상품 정보 (<span th:text="${#lists.size(orderItems)}">1</span>개)</h5>
+                </div>
+                <div class="card-body">
+                    <div th:each="item : ${orderItems}" class="row align-items-center py-2 border-bottom">
+                        <div class="col-8">
+                            <h6 class="fw-bold mb-1" th:text="${item.product.name}">상품명</h6>
+                            <span class="text-muted small"
+                                  th:text="|${#numbers.formatInteger(item.orderPrice, 0, 'COMMA')}원 / ${item.count}개|">
+                            </span>
+                        </div>
+                        <div class="col-4 text-end">
+                            <span class="fw-bold text-primary fs-6"
+                                  th:text="|${#numbers.formatInteger(item.totalPrice, 0, 'COMMA')}원|">
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. 배송지 정보 (기본 회원 정보 자동 채움 + 수정 가능) -->
+            <div class="card mb-4">
+                <div class="card-header bg-white py-3">
+                    <h5 class="fw-bold mb-0">배송지 정보 <span class="text-muted small fs-6 fw-normal">(수정 가능)</span></h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label text-muted">수령인</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="receiverName" class="form-control" th:value="${customer.name}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label text-muted">연락처</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="receiverPhone" class="form-control" th:value="${customer.phone}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label text-muted">우편번호</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="zipcode" class="form-control"
+                                   th:value="${customer.address != null ? customer.address.zipcode : ''}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label text-muted">기본 주소</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="basicAddress" class="form-control"
+                                   th:value="${customer.address != null ? customer.address.basicAddress : ''}" required>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label class="col-sm-3 col-form-label text-muted">상세 주소</label>
+                        <div class="col-sm-9">
+                            <input type="text" name="detailAddress" class="form-control"
+                                   th:value="${customer.address != null ? customer.address.detailAddress : ''}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. 결제 최종 금액 카드 및 버튼 -->
+            <div class="card mb-4">
+                <div class="card-body d-flex justify-content-between align-items-center py-4">
+                    <div>
+                        <span class="fs-5 fw-bold">최종 결제 금액</span>
+                    </div>
+                    <div>
+                        <span class="fs-4 fw-bold text-danger"
+                              th:text="|${#numbers.formatInteger(totalPrice, 0, 'COMMA')}원|"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary btn-lg py-3 fw-bold">결제 및 주문완료하기</button>
+            </div>
+        </form>
+    </div>
+
+    <th:block th:replace="~{module/footer.html}"></th:block>
+</body>
+</html>

@@ -1,0 +1,75 @@
+.wrapper {
+    width: 400px;
+    margin: 70px auto;
+    padding: 0;
+}
+.wrapper h2 {
+    margin-bottom: 10px;
+    font-size: 28px;
+    font-weight: bold;
+    text-align: center;
+}
+.wrapper h5 {
+    margin-bottom: 35px;
+    text-align: center;
+    color: #888;
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.input-box { margin-bottom: 22px; }
+.input-box label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 15px;
+    font-weight: bold;
+}
+.input-box input {
+    width: 100%;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+.input-box input::placeholder { color: #aaa; }
+.input-box input:focus {
+    border-color: #888;
+    outline: none;
+}
+
+.login-btn { margin-top: 28px; }
+.login-btn button {
+    width: 100%;
+    height: 46px;
+    border: none;
+    border-radius: 6px;
+    background-color: #18181b;
+    color: #fff;
+    font-size: 15px;
+    cursor: pointer;
+}
+.login-btn button:hover { background-color: #000; }
+
+.signup-btn {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 14px;
+}
+.signup-btn span { color: #555; }
+.signup-btn a {
+    margin-left: 4px;
+    color: #6ea8fe;
+    text-decoration: none;
+    font-weight: bold;
+}
+.signup-btn a:hover { color: royalblue; }
+
+.login-error { margin-bottom: 20px; }
+.login-error p {
+    margin: 0;
+    color: #dc3545;
+    text-align: center;
+    font-size: 14px;
+}

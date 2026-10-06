@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>장바구니</title>
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/cart.css}">
+    <script th:src="@{/js/cart.js}"></script>
+</head>
+<body>
+    <!--/* 상단 메뉴 */-->
+    <th:block th:replace="~{/module/header.html}"></th:block>
+
+    <!--/* 수량 변경 및 삭제 요청용 form */-->
+    <form id="cartActionForm" method="post">
+        <input type="hidden" name="_method" id="mappingMethod">
+    </form>
+
+    <article class="cart-wrapper">
+        <input type="hidden" id="customerId" th:value="${#authentication.name}">
+
+        <section class="cart-title">
+            <p class="small text-center text-muted mb-0">Shopping cart</p>
+            <h2 class="fw-bold text-center mb-5">장바구니</h2>
+        </section>
+        <section th:if="${#lists.isEmpty(sortedItems)}" class="cart-empty">
+            <p>장바구니에 담긴 상품이 없습니다.</p>
+            <a th:href="@{/products/all}">쇼핑 계속하기</a>
+        </section>
+
+        <section th:if="${!#lists.isEmpty(sortedItems)}">
+            <div class="cart-list-box">
+                <div class="cart-list-top row align-items-center">
+                    <div class="col-4 col-md-6">
+                        <label>
+                            <input type="checkbox" class="form-check-input chkAll" checked>
+                            <span>전체선택</span>
+                            <span class="cart-total-count">
+                                    (총 <strong th:text="${cart.grandTotalCount}"></strong>개)
+                                </span>
+                        </label>
+                    </div>
+                    <div class="cart-top-btn col-8 col-md-6 justify-content-end">
+                        <button type="button" class="btnCartAllDelete">선택상품 삭제</button>
+                        <a th:href="@{/products/all}">쇼핑 계속하기</a>
+                    </div>
+                </div>
+                <div class="cart-items">
+                    <div class="cart-item row align-items-center" th:each="item : ${sortedItems}" th:data-total-price="${item.totalPrice}">
+                        <div class="cart-check col-12 col-md-1 mb-3 mb-md-0">
+                            <input type="checkbox" class="form-check-input chkOne" th:value="${item.id}" checked>
+                        </div>
+                        <div class="cart-image-box col-12 col-md-2 mb-3 mb-md-0">
+                            <a th:href="@{|/products/detail/${item.product.id}|}">
+                                <img th:src="@{|/images/${item.product.fileName1}|}" class="cart-img">
+                            </a>
+                        </div>
+                        <div class="cart-product-info col-12 col-md-4 mb-3 mb-md-0 text-center text-md-start ps-0 ps-md-4">
+                            <h3>
+                                <a th:href="@{|/products/detail/${item.product.id}|}" th:text="${item.product.name}"></a>
+                            </h3>
+                            <p>
+                                <span th:text="${item.product.category1}"></span>
+                                <span> / </span>
+                                <span th:text="${item.product.category2}"></span>
+                            </p>
+                            <p th:text="|사이즈 : ${item.product.size}|"></p>
+                            <p th:text="|재질 : ${item.product.material}|"></p>
+                        </div>
+                        <div class="cart-quantity-box col-12 col-md-1 mb-3 mb-md-0">
+                            <input type="number" th:value="${item.quantity}" th:data-id="${item.id}" th:data-stock="${item.product.stock}"
+                                   min="1" th:max="${item.product.stock}" step="1" class="form-control cart-quantity">
+                        </div>
+                        <div class="cart-price col-12 col-md-2 mb-3 mb-md-0" th:text="|${#numbers.formatInteger(item.totalPrice, 3, 'COMMA')}원|"></div>
+                        <div class="cart-item-btn col-12 col-md-2 d-flex justify-content-center align-items-center flex-md-column">
+                            <button type="button" class="btnOrderOne me-2 me-md-0 mb-md-2">바로구매</button>
+                            <button type="button" class="btnDelete" th:data-id="${item.id}">삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-box col-12 col-md-3">
+                    <span>총 상품금액</span>
+                    <strong class="totalProductPrice" th:text="|${#numbers.formatInteger(cart.grandTotalPrice, 3, 'COMMA')}원|"></strong>
+                </div>
+                <div class="summary-sign col-12 col-md-1">+</div>
+                <div class="summary-box col-12 col-md-3">
+                    <span>배송비</span>
+                    <strong>무료</strong>
+                </div>
+                <div class="summary-box summary-total col-12 col-md-5">
+                    <span>총 주문금액</span>
+                    <strong class="totalOrderPrice" th:text="|${#numbers.formatInteger(cart.grandTotalPrice, 3, 'COMMA')}원|"></strong>
+                </div>
+            </div>
+            <div class="cart-bottom-btn">
+                <div class="bottom-ceter-btn">
+                    <button type="button" class="btnOrderSelect">선택상품 주문</button>
+                    <button type="button" class="btnOrderAll">전체상품 주문</button>
+                </div>
+            </div>
+        </section>
+    </article>
+
+    <!--/* 하단: 풋터 */-->
+    <th:block th:replace="~{/module/footer.html}"></th:block>
+</body>
+</html>

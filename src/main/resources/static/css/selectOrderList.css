@@ -1,0 +1,285 @@
+body {
+    margin: 0;
+    color: #222;
+    background-color: #f8f9fa;
+}
+.admin-layout { display: flex; }
+.admin-layout > header { margin-bottom: 60px; }
+.admin-layout > header h1 {
+    margin: 0;
+    font-size: 50px;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background-color: #ffffff;
+}
+th, td { border: 1px solid #e5e5e5; }
+th {
+    padding: 12px 10px;
+    color: #555555;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+}
+table > tbody > tr:first-child,
+table tr:first-child {
+    background-color: #f7f7f8;
+}
+td {
+    padding: 10px;
+    border: 1px solid #eeeeee;
+    text-align: center;
+    vertical-align: middle;
+}
+
+table tr:first-child th:nth-child(1) { width: 6%; }
+table tr:first-child th:nth-child(2) { width: 10%; }
+table tr:first-child th:nth-child(3) { width: 7%; }
+table tr:first-child th:nth-child(4) { width: 7%; }
+table tr:first-child th:nth-child(5) { width: 22%; }
+table tr:first-child th:nth-child(6) { width: 10%; }
+table tr:first-child th:nth-child(7) { width: 9%; }
+table tr:first-child th:nth-child(8) { width: 7%; }
+table tr:first-child th:nth-child(9) { width: 7%; }
+table tr:first-child th:nth-child(10) { width: 10%; }
+table tr:first-child th:nth-child(11) { width: 5%; }
+
+.wrapper { padding: 40px; width: 100% }
+.wrapper > h3 {
+    text-align: left;
+    margin: 20px 0 40px 0;
+    font-weight: bold;
+}
+.section01 {
+    padding: 15px 20px;
+    margin-bottom: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+}
+.search-row {
+    min-height: 48px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    border-bottom: 1px solid #eeeeee;
+    gap: 24px;
+    padding: 6px 0;
+}
+.search-item {
+    display: flex;
+    align-items: center;
+}
+.section01 label {
+    width: 80px;
+    font-size: 13px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+.section01 input, .section01 select {
+    height: 34px;
+    padding: 0 12px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background-color: #ffffff;
+    outline: none;
+    font-size: 13px;
+    flex: 1;
+    max-width: 320px;
+}
+.section01 input:focus, .section01 select:focus {
+    border-color: #4c78ff;
+}
+.search-item select {
+    cursor: pointer;
+}
+.searchBox05 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 8px;
+    padding-top: 12px;
+}
+.searchBox05 button {
+    min-width: 70px;
+    height: 34px;
+    padding: 0 15px;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-size: 13px;
+    cursor: pointer;
+}
+.searchBox05 a {
+    min-width: 70px;
+    height: 34px;
+    padding: 0 15px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d5d5d5;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #333333;
+    font-size: 13px;
+    text-decoration: none;
+}
+.searchBox05 button:last-child {
+    border-color: #4c78ff;
+    color: #3467ff;
+}
+.searchBox05 button:hover,
+.searchBox05 a:hover {
+    background-color: #f5f6f8;
+}
+
+.section02 {
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 12px;
+}
+.section02 > div:first-child {
+    margin-bottom: 15px;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+.section02 > div:nth-child(2) {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.product-cell {
+    text-align: left;
+    padding: 8px 10px;
+}
+.product-info-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.order-product-thumbnail {
+    width: 42px;
+    height: 42px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e5e5e5;
+    flex-shrink: 0;
+}
+.product-title-text {
+    flex: 1;
+    font-size: 13px;
+    line-height: 1.3;
+    word-break: break-all;
+}
+
+.delivery-status-badge,
+.order-status-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+.status-배송준비중,
+.status-상품준비중 {
+    background-color: #fff7e6;
+    color: #fa8c16;
+    border: 1px solid #ffd591;
+}
+.status-배송중 {
+    background-color: #e6f7ff;
+    color: #1890ff;
+    border: 1px solid #91d5ff;
+}
+.status-배송완료 {
+    background-color: #f6ffed;
+    color: #52c41a;
+    border: 1px solid #b7eb8f;
+}
+.status-배송취소 {
+    background-color: #fff1f0;
+    color: #f5222d;
+    border: 1px solid #ffa39e;
+}
+.status-주문완료 {
+    background-color: #e6f4ff;
+    color: #0958d9;
+    border: 1px solid #91caff;
+}
+.status-주문취소 {
+    background-color: #fff1f0;
+    color: #cf1322;
+    border: 1px solid #ffa39e;
+}
+
+.status-manage-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+}
+.status-form {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    width: 100%;
+}
+.status-select {
+    height: 30px;
+    padding: 0 8px;
+    border: 1px solid #d0d0d0;
+    border-radius: 4px;
+    font-size: 12px;
+    background-color: #ffffff;
+    cursor: pointer;
+    width: 100%;
+    max-width: 95px;
+}
+.status-select:focus {
+    border-color: #4c78ff;
+    outline: none;
+}
+.btn-status-change {
+    height: 28px;
+    padding: 0 6px;
+    border: 1px solid #4c78ff;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #3467ff;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.btn-status-change:hover { background-color: #f2f5ff; }
+
+.btn-detail {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: #495057;
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+.btn-detail:hover {
+    background-color: #e9ecef;
+    color: #212529;
+}
+.current-page-info {
+    text-align: center;
+    font-size: 0.85em;
+    color: #999;
+    margin-top: -50px;
+    margin-bottom: 40px;
+}

@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <th:block th:replace="~{/module/bxslider}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/product.css}">
+    <script th:src="@{/js/product.js}"></script>
+    <title th:text="${product.name}">상품 상세</title>
+</head>
+<body>
+<div class="container-fluid">
+    <!--/* 상단: 메뉴 */-->
+    <th:block th:replace="~{/module/header.html}"></th:block>
+
+    <div class="wrapper">
+        <div class="row align-items-stretch">
+            <div class="col-12 col-lg-10 pt-4 pt-lg-5">
+                <nav style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}">
+                                <i class="bi bi-house-door-fill home-icon"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a th:href="@{|/products/category/${product.category1}|}">
+                                [[${product.category1}]]
+                            </a>
+                        </li>
+
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <a th:href="@{|/products/category/${product.category1}?category2=${product.category2}|}">
+                                [[${product.category2}]]
+                            </a>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <!--/* 좌측: 대표 이미지, 썸네일 이미지 */-->
+            <div class="row">
+                <div class="col-12 col-lg-5 book-img">
+                    <div class="big-img ratio ratio-1x1">
+                        <img th:src="@{|/images/${product.fileName1}|}" class="w-100">
+                    </div>
+                    <div class="small-img">
+                        <img th:src="@{|/images/${product.fileName1}|}">
+                        <img th:src="@{|/images/${product.fileName2}|}">
+                        <img th:src="@{|/images/${product.fileName3}|}">
+                        <img th:src="@{|/images/${product.fileName4}|}">
+                    </div>
+                </div>
+                <!--/* 우측: 세부내용, 주문, 장바구니 버튼 */-->
+                <div class="col-12 col-lg-5 mt-5 mt-lg-0">
+                    <div class="product-detail-1">
+                        <a th:href="@{|/products/brand/${product.brand}|}">[[${product.brand}]] <i class="bi bi-chevron-right small"></i></a>
+                        <h5 th:text="${product.name}" class="fw-bold mt-2 fs-5"></h5>
+                        <span class="text-muted small"><b>★ [[${avgRating != null ? #numbers.formatDecimal(avgRating, 1, 1) : '0.0'}]]</b>
+                             | <a href="#product-review">후기 [[${reviewCount != null ? reviewCount : 0}]]개</a></span>
+                        <h6 class="fs-5 my-3"><b>[[${#numbers.formatInteger(product.price,3,'COMMA')}]]</b> 원</h6>
+
+                        <div class="row mb-3 mt-4">
+                            <div class="col-4 col-lg-2 text-secondary">사이즈</div>
+                            <div class="col-8 col-lg-10 text-end">[[${product.size}]]</div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-4 col-lg-2 text-secondary">소재</div>
+                            <div class="col-8 col-lg-10 text-end">[[${product.material}]]</div>
+                        </div>
+                        <div class="row my-3">
+                            <div class="col-4 col-lg-2 text-secondary">배송비</div>
+                            <div class="col-8 col-lg-10 text-end">무료배송</div>
+                        </div>
+                        <div class="py-4 mb-4 border-bottom border-top">
+                            <div class="row align-items-center">
+                                <div class="col-4 col-lg-2 fw-bold">수량</div>
+                                <div class="col-8 col-lg-10 d-flex justify-content-end">
+                                    <input type="number" id="productQuantity" class="form-control product-quantity" value="1" min="1"
+                                           th:max="${product.stock}" th:disabled="${product.stock == 0}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between gap-2">
+                        <form th:action="@{/cart/add}" method="post" name="addForm" id="addForm" class="m-0 w-100" onsubmit="addToCart(event, this)">
+                            <input type="hidden" name="productId" th:value="${product.productId}">
+                            <input type="hidden" name="customerId" th:value="${#authentication.name}">
+                            <input type="hidden" name="quantity" id="cartQuantity" value="1">
+                            <button type="button" class="btn btn-sm py-3 px-5 btnCart" th:if="${product.stock > 0}">
+                                장바구니
+                            </button>
+                            <!--/* 품절 버튼 (재고가 0일 경우) */-->
+                            <button class="btn btn-sm btn-secondary py-3 px-5 fw-bold rounded-0 w-100"
+                                    th:if="${product.stock == 0}" disabled>
+                                품절
+                            </button>
+                        </form>
+                        <!-- 2. 바로구매 (순수 타임리프 GET 링크) -->
+                        <a class="btn btn-sm py-3 px-5 btnBuy" id="btnBuy"
+                           th:attr="data-product-id=${product.id}" th:if="${product.stock > 0}"
+                           th:href="@{/order(productId=${product.id}, quantity=1)}">
+                            바로구매
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- /* 관련 상품 */ -->
+            <div class="related-product" th:if="${!#lists.isEmpty(sliderProductList)}">
+                <h3>관련 상품</h3>
+                <div class="related-info">
+                    <p class="related-text">같은 카테고리의 다른 상품도 확인해보세요</p>
+                    <div class="related-page">
+                        <span class="current-page">1</span>
+                        <span> / </span>
+                        <span class="total-page">1</span>
+                    </div>
+                </div>
+                <!-- /* 슬라이더 */ -->
+                <div class="slider">
+                    <div th:each="sliderProduct : ${sliderProductList}" class="related-item">
+                        <a th:href="@{|/products/detail/${sliderProduct.id}|}">
+                            <img th:src="@{|/images/${sliderProduct.fileName1}|}" th:alt="${sliderProduct.name}" class="related-img">
+                        </a>
+                        <form th:action="@{/cart/add}" method="post" onsubmit="addToCart(event, this)">
+                            <input type="hidden" name="productId" th:value="${sliderProduct.productId}">
+                            <input type="hidden" name="customerId" th:value="${#authentication.name}">
+                            <button type="submit" class="related-cart-btn">
+                                <img th:src="@{/icons/basket-icon.png}">
+                                <span>담기</span>
+                            </button>
+                        </form>
+                        <a th:href="@{|/products/detail/${sliderProduct.id}|}" class="related-name"
+                           th:text="${#strings.length(sliderProduct.name) > 35 ? #strings.substring(sliderProduct.name, 0, 35) + '...' : sliderProduct.name}">
+                        </a>
+                        <p class="related-price" th:text="|${#numbers.formatInteger(sliderProduct.price, 3, 'COMMA')}원|"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!--/* 아래: 상품상세 / 상품정보 / 후기 */-->
+            <div class="row">
+                <!--/* 상품 상세페이지 네비게이션 */-->
+                <div class="product-nav">
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#product-detail">상품상세</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#product-info">상품정보</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#product-review">후기([[${reviewCount != null ? reviewCount : 0}]])</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/* 상품 상세 */-->
+                <div class="col-12 mt-5" id="product-detail">
+                    <p th:text="${product.description}" class="fs-6 lh-lg p-text text-center"></p>
+                    <div class="text-center container-fluid">
+                        <img th:src="@{|/images/${product.fileName1}|}" class="img-fluid">
+                        <img th:src="@{|/images/${product.fileName2}|}" class="img-fluid">
+                        <img th:src="@{|/images/${product.fileName3}|}" class="img-fluid">
+                        <img th:src="@{|/images/${product.fileName4}|}" class="img-fluid">
+                    </div>
+                </div>
+                <!--/* 상품 상세페이지 네비게이션 */-->
+                <div class="product-nav">
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#product-detail">상품상세</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#product-info">상품정보</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#product-review">후기([[${reviewCount != null ? reviewCount : 0}]])</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/* 상품 정보 */-->
+                <div class="col-12 mt-5" id="product-info">
+                    <table class="table table-bordered">
+                        <tr>
+                            <th class="table-light text-center">상품코드</th>
+                            <td>[[${product.productId}]]</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-center">상품명</th>
+                            <td>[[${product.name}]]</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-center">브랜드</th>
+                            <td>[[${product.brand}]]</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-center">사이즈</th>
+                            <td>[[${product.size}]]</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-center">소재</th>
+                            <td>[[${product.material}]]</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-center">제조국</th>
+                            <td>[[${product.country}]]</td>
+                        </tr>
+                        <tr>
+                            <th class="table-light text-center">제조일자</th>
+                            <td>[[${product.createDate}]]</td>
+                        </tr>
+                    </table>
+                </div>
+                <!--/* 상품 상세페이지 네비게이션 */-->
+                <div class="product-nav">
+                    <ul class="nav nav-underline">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#product-detail">상품상세</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#product-info">상품정보</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#product-review">후기([[${reviewCount != null ? reviewCount : 0}]])</a>
+                        </li>
+                    </ul>
+                </div>
+                <!--/* 상품 리뷰 */-->
+                <div class="col-12 mt-5" id="product-review">
+                    <!--/* 1. 전체 평점 대시보드 요약 박스 */-->
+                    <div class="p-4 bg-light border mb-4 rounded-1">
+                        <div class="row align-items-center">
+                            <!--/* 좌측: 평균 점수 및 큰 별점 */-->
+                            <div class="col-12 col-md-4 text-center border-end-md py-2">
+                                <div class="text-muted small mb-1 fw-bold">구매자 총 평점</div>
+                                <div class="display-5 fw-bold text-dark mb-1"
+                                     th:text="${avgRating != null ? #numbers.formatDecimal(avgRating, 1, 1) : '0.0'}">0.0</div>
+                                <!--/* 평균 점수에 따른 별점 표시 (정수 반올림 기준) */-->
+                                <div class="text-warning fs-5 mb-1"
+                                     th:with="roundedRating=${avgRating != null ? T(java.lang.Math).round(avgRating) : 0}">
+                                    <span th:text="${'★'.repeat(roundedRating) + '☆'.repeat(5 - roundedRating)}"></span>
+                                </div>
+                                <div class="text-muted small">
+                                    총 <strong class="text-dark" th:text="${reviewCount != null ? reviewCount : 0}">0</strong>개의 후기
+                                </div>
+                            </div>
+
+                            <!--/* 우측: 별점별 분포 막대그래프 (5점 ~ 1점) */-->
+                            <div class="col-12 col-md-8 ps-md-4 mt-3 mt-md-0">
+                                <div th:each="score : ${#numbers.sequence(5, 1)}" class="d-flex align-items-center mb-1">
+                                    <span class="small text-muted me-2" style="width: 32px;" th:text="${score + '점'}"></span>
+
+                                    <!--/* 점수별 개수 계산 (단순 타임리프 리스트 필터링) */-->
+                                    <div class="progress flex-grow-1" style="height: 8px;"
+                                         th:with="countForScore=${reviewList != null ? #lists.size(reviewList.?[rating == #root.score]) : 0},
+                                      percent=${(reviewCount != null && reviewCount > 0) ? (countForScore * 100.0 / reviewCount) : 0}">
+                                        <div class="progress-bar bg-warning" role="progressbar"
+                                             th:style="'width: ' + ${percent} + '%'"
+                                             th:aria-valuenow="${percent}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <!--/* 해당 점수 리뷰 개수 */-->
+                                    <span class="small text-muted ms-2 text-end" style="width: 30px;"
+                                          th:with="countForScore=${reviewList != null ? #lists.size(reviewList.?[rating == #root.score]) : 0}"
+                                          th:text="${countForScore}">0
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--/* 3. 후기 목록 영역 (카드 디자인) */-->
+                    <div th:if="${!#lists.isEmpty(reviewList)}" class="mt-4 d-flex flex-column gap-3">
+                        <!--/* 개별 리뷰 카드 */-->
+                        <div th:each="review : ${reviewList}"
+                             class="card border rounded-2 review-item"
+                             th:data-review-id="${review.id}">
+
+                            <!--/* 카드 헤더: 별점, 작성자, 작성일 */-->
+                            <div class="card-header bg-white border-bottom py-3 d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center gap-2">
+                                    <!--/* 별점 시각화 */-->
+                                    <span class="text-warning fw-bold fs-6"
+                                          th:text="${'★'.repeat(review.rating) + '☆'.repeat(5 - review.rating)}"></span>
+                                    <!--/* 작성자 *로 마스킹 */-->
+                                    <span class="fw-bold ms-2 text-secondary"
+                                          th:with="cid=${review.customer.customerId}"
+                                          th:text="${cid.length() > 2 ? cid.substring(0, 2) + '*'.repeat(cid.length() - 2) : cid + '*'}">
+                                    </span>
+                                </div>
+                                <!--/* 작성일자 */-->
+                                <span class="text-muted small"
+                                      th:if="${review.regDate != null}"
+                                      th:text="${#temporals.format(review.regDate, 'yyyy-MM-dd')}">
+                                </span>
+                            </div>
+
+                            <!--/* 카드 본문: 리뷰 내용 */-->
+                            <div class="card-body py-3">
+                                <p class="card-text text-dark lh-base mb-0"
+                                   th:text="${review.content}"
+                                   style="white-space: pre-line; word-break: break-word;"></p>
+                            </div>
+
+                            <!--/* 카드 푸터: 추천/댓글 기능 */-->
+                            <div class="card-footer bg-white border-top px-3 py-3">
+                                <!-- 추천 / 댓글 개수 -->
+                                <div class="d-flex align-items-center gap-3 mb-3">
+                                    <!-- 다른 사람의 후기: 추천 가능 -->
+                                    <form th:if="${#authentication.name != 'anonymousUser' && #authentication.name != review.customer.customerId}"
+                                          th:action="@{|/reviews/${review.id}/recommend|}" method="post" class="m-0 recommend-form">
+
+                                        <button type="submit" class="btn btn-sm" th:classappend="${recommendedMap[review.id]} ?
+                                            'btn-primary' : 'btn-outline-primary'">
+                                            <i th:class="${recommendedMap[review.id]} ? 'bi bi-hand-thumbs-up-fill' : 'bi bi-hand-thumbs-up'">
+                                            </i>
+                                            추천
+                                            <span class="recommend-count" th:text="${recommendCountMap[review.id]}">0</span>
+                                        </button>
+
+                                    </form>
+
+                                    <!-- 본인 후기: 추천 개수만 표시하고 클릭 불가 -->
+                                    <button th:if="${#authentication.name == review.customer.customerId}" type="button"
+                                            class="btn btn-sm btn-outline-primary" disabled>
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                        추천
+                                        <span th:text="${recommendCountMap[review.id]}">0</span>
+                                    </button>
+
+                                    <!-- 댓글 버튼 -->
+                                    <button type="button" class="btn btn-sm btn-outline-secondary comment-toggle-btn" data-bs-toggle="collapse"
+                                            th:attr="data-bs-target=|#review-comments-${review.id}|, aria-controls=|review-comments-${review.id}|"
+                                            aria-expanded="false">
+                                        <i class="bi bi-chat"></i>
+                                        댓글
+                                        <span th:text="${#lists.size(commentMap[review.id])}">0</span>
+                                    </button>
+
+                                </div>
+                                <!-- 댓글 영역 -->
+                                <div class="collapse mt-3"
+                                     th:id="|review-comments-${review.id}|">
+                                    <!-- 댓글 목록 -->
+                                    <div th:if="${!#lists.isEmpty(commentMap[review.id])}" class="border-top">
+                                        <div th:each="comment : ${commentMap[review.id]}"
+                                             class="py-3 border-bottom">
+                                            <div class="d-flex justify-content-between align-items-start">
+                                                <div class="flex-grow-1">
+                                                    <!-- 댓글 작성자 -->
+                                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                                        <span class="fw-bold small"
+                                                              th:with="cid=${comment.customer.customerId}"
+                                                              th:text="${cid.length() > 2 ?
+                                                              cid.substring(0, 2) + '*'.repeat(cid.length() - 2) : cid + '*'}">
+                                                        </span>
+                                                        <span class="text-muted small" th:text="${#temporals.format(comment.regDate,
+                                                            'yyyy-MM-dd HH:mm')}"> </span>
+                                                        <span th:if="${comment.updateDate != null}" class="text-muted small">
+                                                            (수정됨)
+                                                        </span>
+                                                    </div>
+
+                                                    <!-- 댓글 내용 -->
+                                                    <div th:text="${comment.content}"
+                                                         style="white-space: pre-line; word-break: break-word;">
+                                                    </div>
+                                                </div>
+
+                                                <!-- 본인 댓글만 수정 / 삭제 -->
+                                                <div th:if="${#authentication.name == comment.customer.customerId}"
+                                                     class="d-flex gap-2 comment-actions">
+
+                                                    <!-- 댓글 수정 -->
+                                                    <button type="button" class="btn btn-sm comment-edit-btn" data-bs-toggle="collapse"
+                                                            th:attr="data-bs-target=|#comment-edit-${comment.id}|">
+                                                        <i class="bi bi-pencil"></i>
+                                                        수정
+                                                    </button>
+
+                                                    <!-- 댓글 삭제 -->
+                                                    <form th:action="@{|/review-comments/${comment.id}/delete|}"
+                                                          method="post" class="m-0" onsubmit="return confirm('댓글을 삭제하시겠습니까?');">
+                                                        <button type="submit" class="btn btn-sm comment-delete-btn">
+                                                            <i class="bi bi-trash"></i>
+                                                            삭제
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                            <!-- 댓글 수정 폼 -->
+                                            <div class="collapse mt-2"
+                                                 th:id="|comment-edit-${comment.id}|">
+                                                <form th:action="@{|/review-comments/${comment.id}/update|}" method="post" class="d-flex gap-2">
+                                                    <input type="text" name="content" class="form-control" th:value="${comment.content}"
+                                                           style="height: 44px;" required>
+                                                    <button type="submit" class="btn btn-dark px-3 text-nowrap" style="min-width: 60px; height: 44px;">
+                                                        수정
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 댓글 작성 -->
+                                    <form th:if="${#authentication.name != 'anonymousUser'}" th:action="@{|/reviews/${review.id}/comments|}"
+                                          method="post" class="d-flex gap-2 mt-3">
+                                        <input type="text" name="content" class="form-control" placeholder="댓글을 입력해주세요." style="height: 44px;" required>
+
+                                        <button type="submit" class="btn btn-dark px-3 text-nowrap" style="min-width: 60px; height: 44px;">
+                                            등록
+                                        </button>
+                                    </form>
+
+                                    <!-- 비회원 -->
+                                    <div th:if="${#authentication.name == 'anonymousUser'}" class="small text-muted mt-3">
+                                        댓글 작성은 <a th:href="@{/login}">로그인</a> 후 이용할 수 있습니다.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--/* 하단: 풋터 */-->
+    <th:block th:replace="~{/module/footer.html}"></th:block>
+</div>
+<script>
+    function addToCart(event, form) {
+        event.preventDefault(); // 기본 폼 제출 방지 (새로고침 방지)
+
+        const customerId = form.customerId.value;
+
+        // 비회원인 경우 로그인 페이지로 이동
+        if (!customerId || customerId === "anonymousUser") {
+            alert("로그인 후 이용해주세요.");
+            location.href = "/login";
+            return;
+        }
+
+        if (!confirm("장바구니에 추가하시겠습니까?")) {
+            return;
+        }
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: new URLSearchParams(formData)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    alert("장바구니 담기에 실패했습니다.");
+                }
+                return response.json();
+            })
+            .then(cartCount => {
+                document.querySelectorAll(".cart-count").forEach(badge => {
+                    badge.textContent = cartCount;
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("서버 통신 중 오류가 발생했습니다.");
+            });
+    }
+    document.querySelectorAll(".recommend-form").forEach(function(form) {
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            toggleRecommend(form);
+        });
+
+    });
+
+    function toggleRecommend(form) {
+
+        const button = form.querySelector("button");
+        const icon = button.querySelector("i");
+        const count = button.querySelector(".recommend-count");
+
+        fetch(form.action, {
+            method: "POST"
+        })
+            .then(function(response) {
+
+                if (!response.ok) {
+                    throw new Error("추천 처리 실패");
+                }
+
+                return response.json();
+            })
+            .then(function(data) {
+
+                // 추천 수 변경
+                count.textContent = data.recommendCount;
+
+                // 추천 상태
+                if (data.recommended) {
+
+                    button.classList.remove("btn-outline-primary");
+                    button.classList.add("btn-primary");
+
+                    icon.classList.remove("bi-hand-thumbs-up");
+                    icon.classList.add("bi-hand-thumbs-up-fill");
+
+                } else {
+
+                    button.classList.remove("btn-primary");
+                    button.classList.add("btn-outline-primary");
+
+                    icon.classList.remove("bi-hand-thumbs-up-fill");
+                    icon.classList.add("bi-hand-thumbs-up");
+                }
+            })
+            .catch(function(error) {
+                console.error(error);
+                alert("추천 처리 중 오류가 발생했습니다.");
+            });
+    }
+</script>
+</body>
+</html>

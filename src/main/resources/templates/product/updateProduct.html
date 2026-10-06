@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>상품 수정</title>
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/adminCommon.css}">
+    <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
+
+</head>
+<body>
+<main class="admin-layout">
+    <!--/* 왼쪽 : 사이드바 */-->
+    <th:block th:replace="~{/module/adminSidebar.html}"></th:block>
+
+    <article class="wrapper">
+        <h3>상품 정보 수정</h3>
+    <!-- <p class="text-muted mb-0">상품 정보와 이미지를 수정할 수 있습니다.</p>-->
+
+        <form id="updateProductForm"
+              th:action="@{|/products/admin/detail/${product.id}|}"
+              th:object="${product}"
+              method="post"
+              enctype="multipart/form-data">
+            <input type="hidden" th:field="*{id}">
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge text-bg-dark rounded-pill me-2">01</span>
+                        <h5 class="fw-bold mb-0">기본 상품 정보</h5>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label for="productId" class="form-label fw-semibold">상품코드</label>
+                            <input id="productId" type="text" th:field="*{productId}"
+                                   class="form-control bg-light"
+                                   th:classappend="${#fields.hasErrors('productId')} ? ' is-invalid'"
+                                   readonly>
+                            <div class="invalid-feedback" th:errors="*{productId}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="name" class="form-label fw-semibold">상품명</label>
+                            <input id="name" type="text" th:field="*{name}" class="form-control"
+                                   th:classappend="${#fields.hasErrors('name')} ? ' is-invalid'">
+                            <div class="invalid-feedback" th:errors="*{name}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="price" class="form-label fw-semibold">가격</label>
+                            <div class="input-group">
+                                <input id="price" type="number" th:field="*{price}" class="form-control"
+                                       th:classappend="${#fields.hasErrors('price')} ? ' is-invalid'"
+                                       min="0">
+                                <span class="input-group-text">원</span>
+                            </div>
+                            <div class="invalid-feedback"
+                                 th:classappend="${#fields.hasErrors('price')} ? ' d-block'"
+                                 th:errors="*{price}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="brand" class="form-label fw-semibold">브랜드</label>
+                            <input id="brand" type="text" th:field="*{brand}" class="form-control"
+                                   th:classappend="${#fields.hasErrors('brand')} ? ' is-invalid'">
+                            <div class="invalid-feedback" th:errors="*{brand}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="category1" class="form-label fw-semibold">공간분류</label>
+                            <select id="category1" th:field="*{category1}" class="form-select"
+                                    th:classappend="${#fields.hasErrors('category1')} ? ' is-invalid'">
+                                <option value="">선택하세요</option>
+                                <option value="거실">거실</option>
+                                <option value="다이닝">다이닝</option>
+                                <option value="주방">주방</option>
+                                <option value="침실">침실</option>
+                                <option value="욕실">욕실</option>
+                                <option value="어린이">어린이</option>
+                                <option value="홈오피스">홈오피스</option>
+                                <option value="현관">현관</option>
+                                <option value="베란다">베란다</option>
+                                <option value="세탁실">세탁실</option>
+                            </select>
+                            <div class="invalid-feedback" th:errors="*{category1}"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="category2" class="form-label fw-semibold">품목분류</label>
+                            <select id="category2" th:field="*{category2}" class="form-select"
+                                    th:classappend="${#fields.hasErrors('category2')} ? ' is-invalid'">
+                                <option value="">선택하세요</option>
+                                <option value="침대">침대</option>
+                                <option value="소파">소파</option>
+                                <option value="수납장">수납장</option>
+                                <option value="거실테이블">거실테이블</option>
+                                <option value="식탁">식탁</option>
+                                <option value="식탁의자">식탁의자</option>
+                                <option value="거실장">거실장</option>
+                                <option value="옷장">옷장</option>
+                                <option value="침구">침구</option>
+                                <option value="욕실 세면대하부장">욕실 세면대하부장</option>
+                                <option value="욕실 시스템">욕실 시스템</option>
+                                <option value="샤워용품">샤워용품</option>
+                                <option value="영유아 가구">영유아 가구</option>
+                                <option value="장남감정리함">장남감정리함</option>
+                                <option value="영유아 침대">영유아 침대</option>
+                                <option value="컴퓨터책상">컴퓨터책상</option>
+                                <option value="의자">의자</option>
+                                <option value="책상조명">책상조명</option>
+                                <option value="신발장">신발장</option>
+                                <option value="수납함">수납함</option>
+                                <option value="옷걸이 행거">옷걸이 행거</option>
+                                <option value="야외용 테이블">야외용 테이블</option>
+                                <option value="야외용 식탁 의자">야외용 식탁 의자</option>
+                                <option value="야외용 소파">야외용 소파</option>
+                            </select>
+                            <div class="invalid-feedback" th:errors="*{category2}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge text-bg-dark rounded-pill me-2">02</span>
+                        <h5 class="fw-bold mb-0">상품 상세 정보</h5>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <label for="country" class="form-label fw-semibold">제조국</label>
+                        <input id="country" type="text" th:field="*{country}" class="form-control"
+                               th:classappend="${#fields.hasErrors('country')} ? ' is-invalid'">
+                        <div class="invalid-feedback" th:errors="*{country}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="stock" class="form-label fw-semibold">재고</label>
+                        <div class="input-group">
+                            <input id="stock" type="number" th:field="*{stock}" class="form-control"
+                                   th:classappend="${#fields.hasErrors('stock')} ? ' is-invalid'" min="0">
+                            <span class="input-group-text">개</span>
+                        </div>
+                        <div class="invalid-feedback"
+                             th:classappend="${#fields.hasErrors('stock')} ? ' d-block'"
+                             th:errors="*{stock}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="size" class="form-label fw-semibold">사이즈</label>
+                        <input id="size" type="text" th:field="*{size}" class="form-control"
+                               th:classappend="${#fields.hasErrors('size')} ? ' is-invalid'">
+                        <div class="invalid-feedback" th:errors="*{size}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="material" class="form-label fw-semibold">소재</label>
+                        <input id="material" type="text" th:field="*{material}" class="form-control"
+                               th:classappend="${#fields.hasErrors('material')} ? ' is-invalid'">
+                        <div class="invalid-feedback" th:errors="*{material}"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="createDate" class="form-label fw-semibold">출시일</label>
+                        <input id="createDate" type="date" th:field="*{createDate}" class="form-control"
+                               th:classappend="${#fields.hasErrors('createDate')} ? ' is-invalid'">
+                        <div class="invalid-feedback" th:errors="*{createDate}"></div>
+                    </div>
+                    <div class="col-12">
+                        <label for="description" class="form-label fw-semibold">상품 설명</label>
+                        <textarea id="description" th:field="*{description}" class="form-control"
+                                  th:classappend="${#fields.hasErrors('description')} ? ' is-invalid'"
+                                  rows="5" placeholder="상품에 대한 설명을 입력하세요."></textarea>
+                        <div class="invalid-feedback" th:errors="*{description}"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card border-0 shadow-sm mb-4">
+            <div class="card-body p-4 p-md-5">
+                <div class="d-flex align-items-center mb-2">
+                    <span class="badge text-bg-dark rounded-pill me-2">03</span>
+                    <h5 class="fw-bold mb-0">상품 이미지</h5>
+                </div>
+                <p class="text-muted small mb-4">새 파일을 선택하지 않으면 기존 이미지가 유지됩니다.</p>
+
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="border rounded-3 p-3 h-100">
+                            <label for="productImage1" class="form-label fw-semibold">메인 이미지</label>
+                            <div class="ratio ratio-4x3 bg-light rounded overflow-hidden mb-3"
+                                 th:if="${product.fileName1 != null}">
+                                <img th:src="@{|/images/${product.fileName1}|}"
+                                     alt="기존 메인 이미지" class="w-100 h-100 object-fit-cover">
+                            </div>
+                            <input id="productImage1" type="file" th:field="*{productImage1}"
+                                   class="form-control" accept="image/*">
+                            <div class="form-text text-truncate" th:text="${product.fileName1}"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border rounded-3 p-3 h-100">
+                            <label for="productImage2" class="form-label fw-semibold">상세 이미지 1</label>
+                            <div class="ratio ratio-4x3 bg-light rounded overflow-hidden mb-3"
+                                 th:if="${product.fileName2 != null}">
+                                <img th:src="@{|/images/${product.fileName2}|}"
+                                     alt="기존 상세 이미지 1" class="w-100 h-100 object-fit-cover">
+                            </div>
+                            <input id="productImage2" type="file" th:field="*{productImage2}"
+                                   class="form-control" accept="image/*">
+                            <div class="form-text text-truncate" th:text="${product.fileName2}"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border rounded-3 p-3 h-100">
+                            <label for="productImage3" class="form-label fw-semibold">상세 이미지 2</label>
+                            <div class="ratio ratio-4x3 bg-light rounded overflow-hidden mb-3"
+                                 th:if="${product.fileName3 != null}">
+                                <img th:src="@{|/images/${product.fileName3}|}"
+                                     alt="기존 상세 이미지 2" class="w-100 h-100 object-fit-cover">
+                            </div>
+                            <input id="productImage3" type="file" th:field="*{productImage3}"
+                                   class="form-control" accept="image/*">
+                            <div class="form-text text-truncate" th:text="${product.fileName3}"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="border rounded-3 p-3 h-100">
+                            <label for="productImage4" class="form-label fw-semibold">상세 이미지 3</label>
+                            <div class="ratio ratio-4x3 bg-light rounded overflow-hidden mb-3"
+                                 th:if="${product.fileName4 != null}">
+                                <img th:src="@{|/images/${product.fileName4}|}"
+                                     alt="기존 상세 이미지 3" class="w-100 h-100 object-fit-cover">
+                            </div>
+                            <input id="productImage4" type="file" th:field="*{productImage4}"
+                                   class="form-control" accept="image/*">
+                            <div class="form-text text-truncate" th:text="${product.fileName4}"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div class="d-flex flex-nowrap justify-content-center align-items-center gap-2 mb-5">
+        <a th:href="@{/}" class="btn btn-secondary" style="width: 120px;">취소</a>
+        <button type="submit" form="updateProductForm" class="btn btn-dark" style="width: 120px;">수정 완료</button>
+        <!--/* 자바스크립트를 쓰지 않고 선택창을 띄워주는 기능 사용 */-->
+        <form th:action="@{|/products/admin/delete/${product.id}|}" method="post"
+              onsubmit="return confirm('정말 이 상품을 삭제하시겠습니까?');">
+            <button type="submit" class="btn btn-danger" style="width: 120px;">상품 삭제</button>
+        </form>
+    </div>
+    </article>
+</main>
+
+</body>
+</html>

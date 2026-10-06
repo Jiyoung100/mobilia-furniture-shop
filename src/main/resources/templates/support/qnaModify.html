@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>문의 수정</title>
+	<th:block th:replace="~{/module/link.html}"></th:block>
+	<link rel="stylesheet" th:href="@{/css/question.css}">
+	<link rel="stylesheet" th:href="@{/css/qna.css}">
+</head>
+<body>
+	<th:block th:replace="~{/module/header.html}"></th:block>
+
+	<article class="question-wrapper">
+		<section class="question-title">
+			<h2>문의 수정</h2>
+		</section>
+		<section class="qna-write-wrapper">
+			<form th:action="@{/support/qna/modify/{id}(id=${qna.id})}"
+				  method="post"
+				  class="qna-write-form">
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>문의분류</label>
+					<select name="category">
+						<option value="상품문의" th:selected="${qna.category == '상품문의'}">상품문의</option>
+						<option value="배송문의" th:selected="${qna.category == '배송문의'}">배송문의</option>
+						<option value="교환/환불문의" th:selected="${qna.category == '교환/환불문의'}">교환/환불문의</option>
+						<option value="주문/결제문의" th:selected="${qna.category == '주문/결제문의'}">주문/결제문의</option>
+						<option value="기타문의" th:selected="${qna.category == '기타문의'}">기타문의</option>
+					</select>
+				</div>
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>상품코드</label>
+					<div class="qna-product-code">
+						<input type="text" name="productId" th:value="${qna.productId}">
+					</div>
+				</div>
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>제목</label>
+					<input type="text" name="title" th:value="${qna.title}">
+				</div>
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>내용</label>
+					<textarea name="content" rows="10">[[${qna.content}]]</textarea>
+				</div>
+				<div class="qna-write-btn flex-wrap">
+					<a th:href="@{/support/qna/detail/{id}(id=${qna.id})}" class="btnQnaCancel">취소</a>
+					<button type="submit" class="btnQnaConfirm">수정하기</button>
+				</div>
+			</form>
+		</section>
+	</article>
+
+	<th:block th:replace="~{/module/footer.html}"></th:block>
+</body>
+</html>

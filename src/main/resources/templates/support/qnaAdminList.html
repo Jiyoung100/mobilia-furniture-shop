@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Q&A 관리</title>
+
+	<th:block th:replace="~{/module/link.html}"></th:block>
+	<link rel="stylesheet" th:href="@{/css/question.css}">
+	<link rel="stylesheet" th:href="@{/css/qna.css}">
+
+	<script th:src="@{/js/question.js}"></script>
+	<script th:src="@{/js/qna.js}"></script>
+</head>
+<body>
+	<!-- /* 상단 */ -->
+	<th:block th:replace="~{/module/header.html}"></th:block>
+
+	<article class="question-wrapper">
+		<section class="question-title">
+			<h2>고객센터</h2>
+			<h5>궁금한 점이 있으신가요? 빠르고 친절하게 도와드리겠습니다.</h5>
+			<nav class="question-menu">
+				<button type="button" class="btnFaq" data-admin="true">FAQ</button>
+				<button type="button" class="btnQna active" data-admin="true">Q&A</button>
+			</nav>
+		</section>
+		<section class="qna-wrapper">
+			<div class="support-sub-title">
+				<h3>Q&A 관리</h3>
+			</div>
+			<form class="qna-search qna-admin-search" th:action="@{/support/admin/list}" method="get">
+				<select name="status" class="qnaAdminStatus">
+					<option value="all" th:selected="${status == 'all'}">전체</option>
+					<option value="waiting" th:selected="${status == 'waiting'}">답변대기중</option>
+					<option value="complete" th:selected="${status == 'complete'}">답변완료</option>
+				</select>
+				<input type="text" name="keyword" class="qnaAdminKeyword" th:value="${keyword}" placeholder="제목을 검색해주세요.">
+				<button type="submit" class="btnQnaAdminSearch">검색</button>
+			</form>
+			<div class="qna-list">
+				<table class="qna-admin-table">
+					<thead>
+					<tr>
+						<th class="d-none d-md-table-cell">번호</th>
+						<th class="d-none d-md-table-cell">분류</th>
+						<th class="d-none d-md-table-cell">회원ID</th>
+						<th>제목</th>
+						<th class="d-none d-md-table-cell">작성일</th>
+						<th>처리상태</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="qna : ${qnaList}">
+						<td class="d-none d-md-table-cell">[[${qna.id}]]</td>
+						<td class="d-none d-md-table-cell">[[${qna.category}]]</td>
+						<td class="d-none d-md-table-cell">[[${qna.customer.customerId}]]</td>
+						<td>
+							<a th:href="@{/support/admin/detail/{id}(id=${qna.id})}">[[${qna.title}]]</a>
+						</td>
+						<td class="d-none d-md-table-cell">[[${#temporals.format(qna.createDate, 'yyyy-MM-dd HH:mm')}]]</td>
+						<td>
+							<span th:if="${qna.answer == null}" class="status-waiting">답변대기중</span>
+							<span th:if="${qna.answer != null}" class="status-complete">답변완료</span>
+						</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<div class="qna-page">
+					<nav th:if="${qnaPage != null and qnaPage.totalPages > 1}">
+						<ul class="pagination justify-content-center flex-wrap">
+							<!-- /* 이전 */ -->
+							<li class="page-item" th:classappend="${qnaPage.first} ? 'disabled'">
+								<a class="page-link"
+								   th:href="@{/support/admin/list(page=${qnaPage.number - 1}, status=${status}, keyword=${keyword})}">이전</a>
+							</li>
+							<!-- /* 페이지 번호 */ -->
+							<li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, qnaPage.totalPages - 1)}" th:classappend="${pageNumber == qnaPage.number} ? 'active'">
+								<a class="page-link" th:href="@{/support/admin/list(page=${pageNumber}, status=${status}, keyword=${keyword})}" th:text="${pageNumber + 1}">1</a>
+							</li>
+							<!-- /* 다음 */ -->
+							<li class="page-item" th:classappend="${qnaPage.last} ? 'disabled'">
+								<a class="page-link" th:href="@{/support/admin/list(page=${qnaPage.number + 1}, status=${status}, keyword=${keyword})}">다음</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</section>
+	</article>
+
+	<!-- /* 하단 */ -->
+	<th:block th:replace="~{/module/footer.html}"></th:block>
+</body>
+</html>

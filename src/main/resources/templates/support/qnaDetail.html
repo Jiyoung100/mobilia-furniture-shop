@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>문의 상세</title>
+	<th:block th:replace="~{/module/link.html}"></th:block>
+	<link rel="stylesheet" th:href="@{/css/question.css}">
+	<link rel="stylesheet" th:href="@{/css/qna.css}">
+	<script th:src="@{/js/qna.js}"></script>
+</head>
+<body>
+	<!--/* 상단: 헤더 */-->
+	<th:block th:replace="~{/module/header.html}"></th:block>
+
+	<article class="question-wrapper">
+		<section class="question-title">
+			<h2>문의 상세</h2>
+		</section>
+		<section class="qna-detail-wrapper">
+			<div class="qna-detail">
+				<div class="qna-detail-row flex-column flex-md-row">
+					<span>문의분류</span>
+					<p>[[${qna.category}]]</p>
+				</div>
+				<div class="qna-detail-row flex-column flex-md-row">
+					<span>상품코드</span>
+					<p th:if="${qna.productId != null and qna.productId != ''}">
+						[[${qna.productId}]]
+					</p>
+					<p th:if="${qna.productId == null or qna.productId == ''}">-</p>
+				</div>
+				<div class="qna-detail-row flex-column flex-md-row">
+					<span>제목</span>
+					<p>[[${qna.title}]]</p>
+				</div>
+				<div class="qna-detail-row flex-column flex-md-row">
+					<span>작성일</span>
+					<p>[[${#temporals.format(qna.createDate, 'yyyy-MM-dd HH:mm')}]]</p>
+				</div>
+				<div class="qna-detail-content flex-column flex-md-row">
+					<span>문의내용</span>
+					<div>
+						[[${qna.content}]]
+					</div>
+				</div>
+				<div class="qna-answer-box">
+					<h4>답변</h4>
+					<div th:if="${qna.answer == null}">
+						아직 등록된 답변이 없습니다.
+					</div>
+					<div th:if="${qna.answer != null}">
+						<p>[[${qna.answer}]]</p>
+						<span>[[${#temporals.format(qna.answerDate, 'yyyy-MM-dd HH:mm')}]]</span>
+					</div>
+				</div>
+			</div>
+
+			<div class="qna-detail-btn flex-wrap">
+				<a th:href="@{/support?qna=true}">목록</a>
+				<th:block th:if="${qna.answer == null}">
+					<a th:href="@{/support/qna/modify/{id}(id=${qna.id})}" class="btnQnaModify">수정</a>
+					<form th:action="@{/support/qna/delete/{id}(id=${qna.id})}" method="post" class="qnaDeleteForm">
+						<button type="submit" class="btnQnaDelete">삭제</button>
+					</form>
+				</th:block>
+			</div>
+		</section>
+	</article>
+
+	<!--/* 하단: 풋터 */-->
+	<th:block th:replace="~{/module/footer.html}"></th:block>
+</body>
+</html>

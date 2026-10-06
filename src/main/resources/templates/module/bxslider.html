@@ -1,0 +1,58 @@
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+
+	<script>
+		$(document).ready(() => {
+			let slider = $('.slider').bxSlider({
+				slideWidth: 280,
+				minSlides: 2,
+				maxSlides: 5,
+				slideMargin: 24,
+				moveSlides: 0,
+				shrinkItems: true,
+				controls: true,
+				pager: false,
+				auto: false,
+				infiniteLoop: false,
+				touchEnabled: false,
+
+				onSlideAfter: function() {
+					$('.current-page').text(slider.getCurrentSlide() + 1);
+					$('.total-page').text(slider.getPagerQty());
+				}
+			});
+
+			$('.current-page').text(slider.getCurrentSlide() + 1);
+			$('.total-page').text(slider.getPagerQty());
+
+			$('.related-product .bx-next').off('click').on('click', function(e) {
+				e.preventDefault();
+
+				if(slider.getCurrentSlide() === slider.getPagerQty() - 1) {
+					slider.goToSlide(0);
+				} else {
+					slider.goToNextSlide();
+				}
+			});
+
+			$('.related-product .bx-prev').off('click').on('click', function(e) {
+				e.preventDefault();
+
+				if(slider.getCurrentSlide() === 0) {
+					slider.goToSlide(
+							slider.getPagerQty() - 1
+					);
+				} else {
+					slider.goToPrevSlide();
+				}
+			});
+
+			$(window).on('resize', function() {
+				$('.current-page').text(slider.getCurrentSlide() + 1);
+				$('.total-page').text(slider.getPagerQty());
+
+			});
+
+		});
+	</script>

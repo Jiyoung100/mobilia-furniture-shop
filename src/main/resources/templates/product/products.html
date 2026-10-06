@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/products.css}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js"></script>
+    <title>MOBILIA | Furniture&Living</title>
+</head>
+<body>
+    <!-- 상단: 메뉴 -->
+    <th:block th:replace="~{/module/header.html}"></th:block>
+
+    <!-- 메인 Swiper -->
+    <div class="swiper mainSwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide main-slide slide1">
+                <div class="container h-100 d-flex align-items-center justify-content-left">
+                    <div class="swiper-text">
+                        <h1>머물고 싶은 공간을 만들다</h1>
+                        <h5>취향과 편안함이 함께하는 거실을 완성해보세요</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide main-slide slide2">
+                <div class="container h-100 d-flex align-items-center justify-content-left">
+                    <div class="swiper-text">
+                        <h1>공간에 나만의 취향을 더하다</h1>
+                        <h5>작은 변화로 시작하는 새로운 인테리어</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide main-slide slide3">
+                <div class="container h-100 d-flex align-items-center justify-content-left">
+                    <div class="swiper-text">
+                        <h1>하루의 끝, 가장 편안한 공간</h1>
+                        <h5>나만의 휴식을 위한 침실 가구를 만나보세요</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide main-slide slide4">
+                <div class="container h-100 d-flex align-items-center justify-content-left">
+                    <div class="swiper-text">
+                        <h1>함께하는 시간을 더 특별하게</h1>
+                        <h5>일상의 순간을 채워줄 다이닝 가구를 만나보세요</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+
+    <div class="wrapper">
+        <!--/* 공간별 가구 카테고리 */-->
+        <div class="container py-5 mt-5">
+            <h3 class="fw-bold text-center mb-4">공간별 가구</h3>
+            <div class="row text-center g-1">
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/거실}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category01.jpg}">
+                        </div>
+                        <p class="mt-2">거실</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/다이닝}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category02.jpg}">
+                        </div>
+                        <p class="mt-2">다이닝</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/침실}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category03.jpg}">
+                        </div>
+                        <p class="mt-2">침실</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/욕실}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category04.jpg}">
+                        </div>
+                        <p class="mt-2">욕실</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/키즈룸}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category05.jpg}">
+                        </div>
+                        <p class="mt-2">키즈룸</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/홈오피스}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category06.jpg}">
+                        </div>
+                        <p class="mt-2">홈오피스</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/현관}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category07.jpg}">
+                        </div>
+                        <p class="mt-2">현관</p>
+                    </a>
+                </div>
+                <div class="col-3 col-xl category-box">
+                    <a th:href="@{/products/category/베란다}" class="text-decoration-none text-dark">
+                        <div class="category-img-box">
+                            <img th:src="@{/images/category08.jpg}">
+                        </div>
+                        <p class="mt-2">베란다</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 중단: 상품 진열 -->
+        <div class="container py-5 mt-5 new-product-slider">
+            <div class="d-flex align-items-center mb-3">
+                <h3 class="fw-bold">새로 나온 상품</h3>
+                <a th:href="@{/products/new}" class="more-link ms-auto">더보기 +</a>
+            </div>
+            <div class="swiper newProductSwiper">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide" th:each="product : ${newProductList}">
+                        <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+        </div>
+    </div>
+
+    <!--/* 하단: 풋터 */-->
+    <th:block th:replace="~{/module/footer.html}"></th:block>
+
+    <!--/* Swiper */-->
+    <script th:src="@{/js/products.js}"></script>
+</body>
+</html>

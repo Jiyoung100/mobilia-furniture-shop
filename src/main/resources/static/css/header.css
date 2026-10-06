@@ -1,0 +1,73 @@
+/* header.html */
+.navbar-brand .brand-logo { width: 130px; }
+.pc-nav a { font-weight: 600; transition: font-weight 0.2s ease; }
+.pc-nav a:hover { font-weight: bold; color: #552F13; }
+.nav-link { font-weight: 400; }
+.category1-menu a { font-weight: 400; }
+.dropdown:hover .dropdown-menu { display: block; margin-top: 0; }
+.dropdown-toggle::after { display: none; }
+.nav-right i, .mobile-menu i { font-size: 22px; }
+.nav-right span, .mobile-menu span { font-size: 12px; }
+
+.cart-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    top: -2px;
+    right: -8px;
+    background-color: #552F13;
+}
+.cart-count > .cart-count-num {
+    font-size: 11px;
+    font-weight: 500;
+    position: relative;
+    top: 1px;
+}
+.mobile-menu .cart-count > .cart-count-num { top: 0; }
+
+/* 하단 모바일 메뉴 */
+.mobile-menu { height: 70px; }
+
+/* 모바일 메뉴 */
+.category-btn {
+    width: 100%;
+    padding: 16px 0;
+    border: none;
+    background: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 18px;
+    color: #333;
+    text-align: left;
+}
+.category-btn:hover { background-color: #f8f8f8; }
+.category-btn span { padding-left: 10px; }
+.sub-category {
+    display: flex;
+    flex-direction: column;
+    padding: 4px 0 12px 16px;
+}
+.sub-category a {
+    padding: 8px 0;
+    font-size: 15px;
+    color: #777;
+}
+.m-menu-title {
+    color: #552F13;
+    display: block;
+    padding: 16px 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+.brand-category {
+    width: 100%;
+    border: none;
+    background: none;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+    display: flex;
+}

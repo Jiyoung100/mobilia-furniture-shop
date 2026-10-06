@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>전체 주문</title>
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/selectOrderList.css}">
+    <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
+    <script th:src="@{/js/selectOrderList.js}"></script>
+</head>
+<body>
+<div class="admin-layout">
+    <!--/* 왼쪽 : 사이드바 */-->
+    <th:block th:replace="~{/module/adminSidebar.html}"></th:block>
+    <article class="wrapper">
+        <h3>전체 주문 목록</h3>
+        <form class="section01 shadow-sm" th:action="@{/orders/admin/list}" method="get">
+            <div class="search-row">
+                <div class="search-item">
+                    <label>주문번호</label>
+                    <input type="text" name="orderId" th:value="${orderId}" placeholder="예: 1">
+                </div>
+                <div class="search-item">
+                    <label>수령인</label>
+                    <input type="text" name="receiverName" th:value="${receiverName}" placeholder="수령인명 검색">
+                </div>
+                <div class="search-item">
+                    <label>전화번호</label>
+                    <input type="text" name="receiverPhone" th:value="${receiverPhone}" placeholder="예: 010-1234-5678">
+                </div>
+            </div>
+            <div class="search-row">
+                <div class="search-item">
+                    <label>배송상태</label>
+                    <select name="deliveryStatus">
+                        <option value="" th:selected="${deliveryStatus == '' || deliveryStatus == null}">전체</option>
+                        <option value="상품준비중" th:selected="${deliveryStatus == '상품준비중'}">상품준비중</option>
+                        <option value="배송중" th:selected="${deliveryStatus == '배송중'}">배송중</option>
+                        <option value="배송완료" th:selected="${deliveryStatus == '배송완료'}">배송완료</option>
+                    </select>
+                </div>
+                <div class="search-item">
+                    <label>주문상태</label>
+                    <select name="orderStatus">
+                        <option value="" th:selected="${orderStatus == '' || orderStatus == null}">전체</option>
+                        <option value="주문완료" th:selected="${orderStatus == '주문완료'}">주문완료</option>
+                        <option value="주문취소" th:selected="${orderStatus == '주문취소'}">주문취소</option>
+                    </select>
+                </div>
+            </div>
+            <div class="searchBox05">
+                <a th:href="@{/orders/admin/list}">초기화</a>
+                <button type="submit">검색</button>
+            </div>
+        </form>
+
+        <div class="section02 shadow-sm">
+            <div>
+                <span th:text="|[전체 주문 수 ${paging.totalElements}건]|"></span>
+            </div>
+            <div>
+                <table>
+                    <tr>
+                        <th>주문번호</th>
+                        <th>주문일시</th>
+                        <th>주문자</th>
+                        <th>수령인</th>
+                        <th>주문상품명</th>
+                        <th>전화번호</th>
+                        <th>총 결제금액</th>
+                        <th>배송상태</th>
+                        <th>주문상태</th>
+                        <th>배송/주문상태 관리</th>
+                        <th>상세보기</th>
+                    </tr>
+                    <tr th:each="order : ${paging}">
+                        <td th:text="${order.id}"></td>
+                        <td th:text="${#temporals.format(order.orderDate, 'yyyy-MM-dd HH:mm')}"></td>
+                        <td th:text="${order.delivery != null ? order.orderCustomer.name : '-'}"></td>
+                        <td th:text="${order.delivery != null ? order.delivery.receiverName : '-'}"></td>
+                        <td class="product-cell">
+                            <div class="product-info-wrapper" th:if="${order.orderItems != null and !order.orderItems.isEmpty()}">
+                                <img th:if="${order.orderItems[0].product != null and order.orderItems[0].product.fileName1 != null}"
+                                     th:src="@{|/images/${order.orderItems[0].product.fileName1}|}"
+                                     alt="상품 이미지"
+                                     class="order-product-thumbnail">
+                                <div class="product-title-text">
+                                    <span th:if="${#lists.size(order.orderItems) == 1}" th:text="${order.orderItems[0].product.name}"></span>
+                                    <span th:if="${#lists.size(order.orderItems) > 1}" th:text="|${order.orderItems[0].product.name} 외 ${#lists.size(order.orderItems) - 1}건|"></span>
+                                </div>
+                            </div>
+                            <span th:if="${order.orderItems == null or order.orderItems.isEmpty()}">-</span>
+                        </td>
+                        <td th:text="${order.delivery != null ? order.delivery.receiverPhone : '-'}"></td>
+                        <td th:text="|${#numbers.formatInteger(order.totalPrice, 0, 'COMMA')}원|"></td>
+                        <td>
+                            <span th:if="${order.status == '주문취소' || order.status == 'CANCEL'}">-</span>
+                            <span th:unless="${order.status == '주문취소' || order.status == 'CANCEL'}"
+                                  class="delivery-status-badge"
+                                  th:classappend="|status-${order.delivery != null ? order.delivery.status : ''}|"
+                                  th:text="${order.delivery != null ? order.delivery.status : '-'}"></span>
+                        </td>
+                        <td>
+                            <span class="order-status-badge"
+                                  th:classappend="|status-${order.status != null ? order.status : ''}|"
+                                  th:text="${order.status != null ? order.status : '-'}"></span>
+                        </td>
+                        <td>
+                            <div class="status-manage-container">
+                                <!-- 배송상태 변경 -->
+                                <form th:action="@{/orders/admin/updateDeliveryStatus}" method="post" class="status-form delivery-form">
+                                    <input type="hidden" name="orderId" th:value="${order.id}">
+                                    <select name="status" class="status-select">
+                                        <option value="상품준비중" th:selected="${order.delivery != null and order.delivery.status == '상품준비중'}">상품준비중</option>
+                                        <option value="배송중" th:selected="${order.delivery != null and order.delivery.status == '배송중'}">배송중</option>
+                                        <option value="배송완료" th:selected="${order.delivery != null and order.delivery.status == '배송완료'}">배송완료</option>
+                                    </select>
+                                </form>
+                                <!-- 주문상태 변경 -->
+                                <form th:action="@{/orders/admin/updateOrderStatus}" method="post" class="status-form order-form">
+                                    <input type="hidden" name="orderId" th:value="${order.id}">
+                                    <select name="status" class="status-select">
+                                        <option value="주문완료" th:selected="${order.status == '주문완료'}">주문완료</option>
+                                        <option value="주문취소" th:selected="${order.status == '주문취소'}">주문취소</option>
+                                    </select>
+                                </form>
+                            </div>
+                        </td>
+                        <td>
+                            <a th:href="@{/orders/admin/selectOrderDetail(orderId=${order.id})}" class="btn-detail">상세보기</a>
+                        </td>
+                    </tr>
+                    <tr th:if="${paging.isEmpty()}">
+                        <td colspan="10" style="padding: 30px; color: #888;">조회된 주문 내역이 없습니다.</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!--/* 페이지네이션 */-->
+        <th:block th:with="queryParams=|&orderId=${orderId != null ? orderId : ''}&receiverName=${receiverName}&receiverPhone=${receiverPhone}&deliveryStatus=${deliveryStatus}|">
+            <th:block th:replace="~{/module/pagination :: pagination(${paging}, '/orders/admin/list', ${queryParams})}"></th:block>
+        </th:block>
+        <div class="current-page-info" th:if="${paging != null and !paging.isEmpty()}">
+            <span th:text="|현재 페이지 ${paging.number + 1}/${paging.totalPages}페이지|"></span>
+        </div>
+    </article>
+</div>
+</body>
+</html>

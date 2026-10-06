@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="productCard(product)">
+    <a th:href="@{|/products/detail/${product.id}|}" class="page-link">
+        <div class="card-body">
+            <div class="ratio ratio-1x1">
+                <img th:src="@{|/images/${product.fileName1}|}" class="card-img-top w-100 h-100 object-fit-cover">
+            </div>
+            <p class="small text-muted mb-1 mt-3" th:text="${product.brand}"></p>
+            <h6 th:text="${product.name}" class="card-title"></h6>
+            <h6 class="fw-bold my-2 fs-6 d-inline-block">[[${#numbers.formatInteger(product.price,3,'COMMA')}]] 원</h6>
+            <span th:if="${product.stock == 0}" class="badge bg-secondary fw-normal ms-1">품절</span>
+        </div>
+    </a>
+</div>
+</html>

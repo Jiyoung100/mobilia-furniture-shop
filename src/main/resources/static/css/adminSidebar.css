@@ -1,0 +1,109 @@
+.admin-sidebar {
+    position: sticky;
+    top: 0;
+    left: 0;
+    width: 220px;
+    height: 100vh;
+    background-color: #fff;
+    border-right: 1px solid #e9ecef;
+    padding: 32px 24px;
+    z-index: 1000;
+}
+.admin-logo img { width: 130px; margin-bottom: 10px; }
+.admin-logo a { color: #222; }
+.admin-logo h6 { color: #555; }
+.admin-auth {
+    border-top: 1px solid #eee;
+    border-bottom: 1px solid #eee;
+    padding: 20px 0;
+    margin: 15px 0;
+    font-size: 0.9em;
+}
+.admin-auth a:hover { color: #222; }
+
+/* 메뉴 */
+.admin-menu-link {
+    display: block;
+    padding: 10px 12px;
+    margin-bottom: 4px;
+    color: #333;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.2s;
+}
+.admin-menu-link:hover {
+    background-color: #f3f5f4;
+    color: #552F13;
+}
+.admin-sidebar-bottom {
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* 모바일 상단 메뉴 */
+.admin-mobile-header {
+    width: 100%;
+    flex-shrink: 0;
+}
+.admin-mobile-header .navbar {
+    min-height: 60px;
+    padding: 8px 0;
+}
+.admin-mobile-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+.admin-mobile-brand img {
+    display: block;
+    width: 120px;
+    height: auto;
+}
+.admin-mobile-brand span {
+    color: #666;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.admin-mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: #333;
+    font-size: 28px;
+}
+.admin-mobile-links {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.admin-mobile-links a {
+    padding: 12px;
+    border-radius: 6px;
+    color: #333;
+    font-size: 15px;
+    text-decoration: none;
+}
+.admin-mobile-links a:hover {
+    background-color: #f3f4f5;
+    color: #552F13;
+}
+@media (max-width: 991.98px) {
+    .admin-layout {
+        flex-direction: column;
+    }
+    .wrapper {
+        width: 100%;
+        min-width: 0;
+        padding: 24px 16px;
+    }
+    #adminMobileMenu {
+        width: min(320px, 85vw);
+    }
+}

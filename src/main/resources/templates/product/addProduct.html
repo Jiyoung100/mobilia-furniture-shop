@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>상품 등록</title>
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <link rel="stylesheet" th:href="@{/css/adminCommon.css}">
+    <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
+    <script th:src="@{/js/addProduct.js}"></script>
+</head>
+<body>
+<main class="admin-layout">
+    <!--/* 왼쪽 : 사이드바 */-->
+    <th:block th:replace="~{/module/adminSidebar.html}"></th:block>
+
+    <article class="wrapper">
+        <h3>상품 등록</h3>
+<!--    <p class="text-muted mb-0">상품 정보와 이미지를 등록해주세요.</p>-->
+
+        <form id="addProductForm"
+              th:action="@{/products/admin/add}"
+              th:object="${product}"
+              method="post"
+              enctype="multipart/form-data">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge text-bg-dark rounded-pill me-2">01</span>
+                        <h5 class="fw-bold mb-0">기본 상품 정보</h5>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">상품 코드</label>
+                            <input type="text" class="form-control" th:field="*{productId}">
+                            <p class="text-danger" th:errors="*{productId}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">상품명</label>
+                            <input type="text" class="form-control" th:field="*{name}">
+                            <p class="text-danger" th:errors="*{name}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">가격</label>
+                            <input type="number" class="form-control" th:field="*{price}">
+                            <p class="text-danger" th:errors="*{price}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">브랜드</label>
+                            <input type="text" class="form-control" th:field="*{brand}">
+                            <p class="text-danger" th:errors="*{brand}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">공간 분류</label>
+                            <select th:field="*{category1}" id="select-category1" class="form-select category-select1" aria-label=".form-select-sm">
+                                <option value="">공간을 선택해주세요.</option>
+                                <option value="거실">거실</option>
+                                <option value="다이닝">다이닝</option>
+                                <option value="침실">침실</option>
+                                <option value="욕실">욕실</option>
+                                <option value="키즈룸">키즈룸</option>
+                                <option value="홈오피스">홈오피스</option>
+                                <option value="현관">현관</option>
+                                <option value="베란다">베란다</option>
+                            </select>
+                            <p class="text-danger" th:errors="*{category1}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">품목 분류</label>
+                            <select th:field="*{category2}" id="select-category2" class="form-select category-select2"><option value="">품목 분류를 선택해주세요.</option>
+                            </select>
+                            <p class="text-danger" th:errors="*{category2}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4 p-md-5">
+                    <div class="d-flex align-items-center mb-4">
+                        <span class="badge text-bg-dark rounded-pill me-2">02</span>
+                        <h5 class="fw-bold mb-0">상품 상세 정보</h5>
+                    </div>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">제조국</label>
+                            <input type="text" class="form-control" th:field="*{country}">
+                            <p class="text-danger" th:errors="*{country}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">재고</label>
+                            <input type="number" class="form-control" th:field="*{stock}">
+                            <p class="text-danger" th:errors="*{stock}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">사이즈</label>
+                            <input type="text" class="form-control" th:field="*{size}">
+                            <p class="text-danger" th:errors="*{size}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">소재</label>
+                            <input type="text" class="form-control" th:field="*{material}">
+                            <p class="text-danger" th:errors="*{material}"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="fw-semibold control-label">출시일</label>
+                            <input type="date" class="form-control" th:field="*{createDate}">
+                            <p class="text-danger" th:errors="*{createDate}"></p>
+                        </div>
+                        <div class="col-12">
+                            <label class="fw-semibold control-label">상품 설명</label>
+                            <textarea class="form-control"
+                                      th:field="*{description}"
+                                      rows="5"
+                                      placeholder="상품 설명을 입력해주세요.">
+                                </textarea>
+                            <p class="text-danger" th:errors="*{description}"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <label class="fw-semibold control-label">메인 이미지(썸네일)</label>
+                        <div class="col-sm-12">
+                            <input type="file"
+                                   th:field="*{productImage1}"
+                                   class="form-control"
+                                   accept="image/*">
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-danger" th:errors="*{productImage1}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <label class="fw-semibold control-label">상세 이미지 1</label>
+                        <div class="col-sm-12">
+                            <input type="file"
+                                   th:field="*{productImage2}"
+                                   class="form-control"
+                                   accept="image/*">
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-danger" th:errors="*{productImage2}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <label class="fw-semibold control-label">상세 이미지 2</label>
+                        <div class="col-sm-12">
+                            <input type="file"
+                                   th:field="*{productImage3}"
+                                   class="form-control"
+                                   accept="image/*">
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-danger" th:errors="*{productImage3}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <label class="fw-semibold control-label">상세 이미지 3</label>
+                        <div class="col-sm-12">
+                            <input type="file"
+                                   th:field="*{productImage4}"
+                                   class="form-control"
+                                   accept="image/*">
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-danger" th:errors="*{productImage4}"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-nowrap justify-content-center align-items-center gap-2 mb-5">
+                    <button type="submit" class="btn btn-primary">상품 등록</button>
+                    <a th:href="@{/}" class="btn btn-secondary" style="width: 90px;">취소</a>
+                </div>
+            </div>
+        </form>
+    </article>
+</main>
+</body>
+</html>

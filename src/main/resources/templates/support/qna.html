@@ -1,0 +1,69 @@
+<div class="qna-wrapper">
+	<div class="support-sub-title">
+		<h3>내 문의내역</h3>
+		<p>문의하신 내용과 답변 상태를 확인하실 수 있습니다.</p>
+	</div>
+	<div class="qna-top flex-column flex-md-row">
+		<form class="qna-search col-12 col-md-9" th:action="@{/support}" method="get">
+			<input type="hidden" name="qna" value="true">
+			<select name="status" class="qnaStatus">
+				<option value="all" th:selected="${status == 'all'}">전체</option>
+				<option value="waiting" th:selected="${status == 'waiting'}">답변대기중
+				</option>
+				<option value="complete" th:selected="${status == 'complete'}">답변완료</option>
+			</select>
+			<input type="text" name="keyword" class="qnaKeyword" th:value="${keyword}" placeholder="제목을 검색해주세요.">
+			<button type="submit" class="btnQnaSearch">검색</button>
+		</form>
+		<form class="col-12 col-md-auto" th:action="@{/support/qna/write}" method="get">
+			<button type="submit" class="btnQnaWrite">문의하기</button>
+		</form>
+	</div>
+	<div class="qna-list">
+		<table class="qna-user-table">
+			<thead>
+			<tr>
+				<th class="d-none d-md-table-cell">번호</th>
+				<th class="d-none d-md-table-cell">분류</th>
+				<th>제목</th>
+				<th class="d-none d-md-table-cell">작성일</th>
+				<th>처리상태</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="qna : ${qnaList}">
+				<td class="d-none d-md-table-cell">[[${qna.id}]]</td>
+				<td class="d-none d-md-table-cell">[[${qna.category}]]</td>
+				<td>
+					<a th:href="@{/support/qna/detail/{id}(id=${qna.id})}">[[${qna.title}]]</a>
+				</td>
+				<td class="d-none d-md-table-cell">[[${#temporals.format(qna.createDate, 'yyyy-MM-dd HH:mm')}]]</td>
+				<td>
+					<span th:if="${qna.answer == null}" class="status-waiting">답변대기중</span>
+					<span th:if="${qna.answer != null}" class="status-complete">답변완료</span>
+				</td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="qna-empty" th:if="${qnaList == null or #lists.isEmpty(qnaList)}">등록된 문의가 없습니다.</div>
+
+	<div class="qna-page">
+		<nav th:if="${qnaPage != null and qnaPage.totalPages > 1}">
+			<ul class="pagination justify-content-center flex-wrap">
+				<!--／* 이전 *／-->
+				<li class="page-item" th:classappend="${qnaPage.first} ? 'disabled'">
+					<a class="page-link" th:href="@{/support(qna=true, page=${qnaPage.number - 1}, status=${status}, keyword=${keyword})}">이전</a>
+				</li>
+				<!--／* 페이지 번호 *／-->
+				<li class="page-item" th:each="pageNumber : ${#numbers.sequence(0, qnaPage.totalPages - 1)}" th:classappend="${pageNumber == qnaPage.number} ? 'active'">
+					<a class="page-link" th:href="@{/support(qna=true,page=${pageNumber}, status=${status}, keyword=${keyword})}" th:text="${pageNumber + 1}"></a>
+				</li>
+				<!--／* 다음 *／-->
+				<li class="page-item" th:classappend="${qnaPage.last} ? 'disabled'">
+					<a class="page-link" th:href="@{/support(qna=true, page=${qnaPage.number + 1}, status=${status}, keyword=${keyword})}">다음</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</div>

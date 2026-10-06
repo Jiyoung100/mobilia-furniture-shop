@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <th:block th:replace="~{/module/link.html}"></th:block>
+    <title>신상품</title>
+</head>
+<style>
+    .wrapper > h5 {
+        color: #888;
+        font-size: 14px;
+        font-weight: normal;
+        margin-bottom: 50px;
+        text-align: center;
+    }
+</style>
+<body>
+<!-- 상단: 메뉴 -->
+<th:block th:replace="~{/module/header.html}"></th:block>
+
+<!-- 중단: 상품 진열 -->
+<div class="wrapper py-5 mt-3">
+    <h2 class="fw-bold text-center mb-3">신상품</h2>
+    <h5>새롭게 입고된 가구를 만나보세요</h5>
+    <div class="d-flex align-items-end py-4 mb-5 border-bottom">
+        <span>최근 등록된 상품 <b>[[${newProductList.size()}]]</b>건</span>
+    </div>
+    <div class="d-flex justify-content-between align-items-center">
+        <div class="row g-5">
+            <!-- 상품 반복 출력 -->
+            <div th:each="product : ${newProductList}" class="col-6 col-lg-3">
+                <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--/* 하단: 풋터 */-->
+<th:block th:replace="~{/module/footer.html}"></th:block>
+
+</body>
+</html>

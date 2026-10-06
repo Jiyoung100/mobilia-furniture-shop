@@ -1,0 +1,160 @@
+/* product.html */
+.product-detail-1 { font-size: 0.95em; }
+.product-detail-1 a { color: #999; }
+.product-detail-1 a:hover { color: #222; }
+.book-img { float: left; margin-right: 100px; }
+.big-img { margin-bottom: 30px; }
+.big-img img { object-fit: cover; }
+.small-img { display: flex; justify-content: center; }
+.small-img img { width: 20%; margin: 0 10px; aspect-ratio: 1 / 1; object-fit: cover; }
+.small-img img:hover { border: 1px solid #222; }
+.breadcrumb a { font-size: 14px; color: #666; }
+.breadcrumb a:hover {color: #222; }
+.breadcrumb .home-icon { width: 14px; }
+
+.product-quantity { width: 100px; }
+.product-quantity::-webkit-inner-spin-button, .product-quantity::-webkit-outer-spin-button { opacity: 1; }
+
+.btnCart, .btnBuy { width: 100%; font-weight: bold; }
+.btnCart { border-color: #ccc; }
+.btnCart:hover { border-color: #552F13; background-color: #fff; color: #222; }
+.btnBuy { background-color: #552F13; color: #fff; }
+.btnBuy:hover { background-color: #452610; color: #fff; }
+
+/* 상품 상세페이지 네비게이션 */
+.product-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+.product-nav .nav-item { margin: 0 20px; }
+.product-nav .nav-link { color: #999; }
+.product-nav .nav-link:hover {
+    color: #222;
+    border-bottom: 2px solid #222;
+}
+.product-nav .active {
+    color: #222;
+    font-weight: bold;
+    border-bottom: 2px solid #222;
+}
+
+/* 관련 상품 */
+.related-product {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 40px;
+    padding-top: 35px;
+    border-top: 1px solid #ddd;
+}
+.related-product h3 {
+    margin-bottom: 8px;
+    margin-top: 10px;
+    font-size: 22px;
+    font-weight: bold;
+}
+.related-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+.related-text {
+    margin: 0;
+    color: #888;
+    font-size: 14px;
+}
+.related-page { color: #888; font-size: 14px; }
+.current-page { color: #222; font-weight: bold; }
+.related-product .bx-wrapper {
+    margin: 0 auto;
+    border: 0;
+    box-shadow: none;
+    background: #fff;
+}
+.related-item { text-align: left; }
+.related-img {
+    width: 100%;
+    aspect-ratio: 11 / 10;
+    object-fit: cover;
+}
+.related-cart-btn {
+    width: 100%;
+    height: 32px;
+    margin-top: 7px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 14px;
+    cursor: pointer;
+}
+.related-cart-btn:hover { background-color: #f8f8f8; }
+.related-cart-btn img {
+    width: 14px;
+    height: 14px;
+    margin-right: 5px;
+}
+.related-name {
+    width: 100%;
+    margin-top: 10px;
+    display: block;
+    color: #222;
+    font-size: 15px;
+    line-height: 22px;
+    text-decoration: none;
+}
+.related-name:hover { color: #222; }
+.related-price {
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+/* bxSlider */
+.related-product .bx-wrapper .bx-controls-direction a {
+    display: none;
+    top: 98px;
+    width: 40px;
+    height: 40px;
+    margin-top: -20px;
+    border: 1px solid #ccc;
+    border-radius: 50%;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 32px 32px;
+}
+.related-product .bx-wrapper:hover .bx-controls-direction a { display: block; }
+.related-product .bx-wrapper .bx-prev { left: -20px; background-image: url('../icons/leftArrow-icon.png'); }
+.related-product .bx-wrapper .bx-next { right: -20px; background-image: url('../icons/rightArrow-icon.png'); }
+.related-product .bx-wrapper .bx-controls-direction a:hover,
+.related-product .bx-wrapper .bx-controls-direction a:focus { background-position: center; }
+
+/* 댓글 수정/삭제 버튼 */
+.comment-actions .btn {
+    min-width: 64px;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 13px;
+    white-space: nowrap;
+}
+.comment-edit-btn {
+    background-color: #f3f4f6;
+    color: #333;
+}
+.comment-edit-btn:hover {
+    background-color: #e5e7eb;
+    color: #111;
+}
+.comment-delete-btn {
+    background-color: #fff0f0;
+    color: #dc3545;
+}
+.comment-delete-btn:hover {
+    background-color: #ffe1e1;
+    color: #c82333;
+}

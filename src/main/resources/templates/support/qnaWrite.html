@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>문의하기</title>
+	<th:block th:replace="~{/module/link.html}"></th:block>
+	<link rel="stylesheet" th:href="@{/css/question.css}">
+	<link rel="stylesheet" th:href="@{/css/qna.css}">
+	<script th:src="@{/js/qna.js}"></script>
+</head>
+<body>
+	<!--/* 상단: 헤더 */-->
+	<th:block th:replace="~{/module/header.html}"></th:block>
+
+	<article class="question-wrapper">
+		<section class="question-title">
+			<h2>문의하기</h2>
+		</section>
+		<section class="qna-write-wrapper">
+			<form th:action="@{/support/qna/write}" method="post" class="qna-write-form qnaWriteForm">
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>
+						문의분류
+						<span>*</span>
+					</label>
+					<select name="category">
+						<option value="">선택해주세요.</option>
+						<option value="상품문의">상품문의</option>
+						<option value="배송문의">배송문의</option>
+						<option value="교환/환불문의">교환/환불문의</option>
+						<option value="주문/결제문의">주문/결제문의</option>
+						<option value="기타문의">기타문의</option>
+					</select>
+				</div>
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>상품코드</label>
+					<div class="qna-product-code">
+						<input type="text" name="productId" placeholder="상품코드를 입력해주세요.">
+						<p>상품코드를 입력하시면 보다 빠른 답변을 받으실 수 있습니다.</p>
+					</div>
+				</div>
+
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>제목<span>*</span></label>
+					<input type="text" name="title" placeholder="제목을 입력해주세요.">
+				</div>
+				<div class="qna-write-row flex-column flex-md-row">
+					<label>내용<span>*</span></label>
+					<textarea name="content" rows="10" placeholder="문의 내용을 입력해주세요."></textarea>
+				</div>
+
+				<div class="qna-write-btn flex-wrap">
+					<button type="button" class="btnQnaCancel">취소</button>
+					<button type="submit" class="btnQnaConfirm">등록하기</button>
+				</div>
+			</form>
+		</section>
+	</article>
+
+	<!--/* 하단: 풋터 */-->
+	<th:block th:replace="~{/module/footer.html}"></th:block>
+</body>
+</html>
