@@ -46,7 +46,7 @@
 <img width="1481" height="2072" alt="localhost_8088_" src="https://github.com/user-attachments/assets/9ee5bee7-4cc5-44a4-8d9c-b0056ee1670b" />
 
 ### 상품 상세 화면
-![상품 상세 화면](docs/images/product-detail.png)
+<img width="1649" height="6513" alt="localhost_8088_products_detail_122" src="https://github.com/user-attachments/assets/3eb50759-4372-403f-b39c-ba6b44ceb2ae" />
 
 ### 관리자 화면
 ![관리자 화면](docs/images/admin.png)
