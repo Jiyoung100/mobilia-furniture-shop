@@ -43,7 +43,7 @@
 
 ## 화면 소개
 ### 메인 화면
-![메인 화면](docs/images/main.png)
+![메인 화면](<img width="1481" height="2072" alt="localhost_8088_" src="https://github.com/user-attachments/assets/9ee5bee7-4cc5-44a4-8d9c-b0056ee1670b" />)
 
 ### 상품 상세 화면
 ![상품 상세 화면](docs/images/product-detail.png)
