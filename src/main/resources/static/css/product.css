@@ -8,6 +8,9 @@
 .small-img { display: flex; justify-content: center; }
 .small-img img { width: 20%; margin: 0 10px; aspect-ratio: 1 / 1; object-fit: cover; }
 .small-img img:hover { border: 1px solid #222; }
+.product-breadcrumb {
+    --bs-breadcrumb-divider: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E");
+}
 .breadcrumb a { font-size: 14px; color: #666; }
 .breadcrumb a:hover {color: #222; }
 .breadcrumb .home-icon { width: 14px; }
