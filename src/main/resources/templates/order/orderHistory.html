@@ -91,10 +91,18 @@
             <div th:if="${order.delivery != null and order.delivery.status == '배송완료'}">
               <button type="button"
                       class="btn btn-sm btn-outline-dark btnOpenReviewModal"
-                      th:data-orderitem-id="${order.orderItems[0].id}"
-                      th:data-product-name="${order.orderItems[0].product.name}">
-                후기 작성
+                      th:id="|btn-order-${order.id}|">
+                후기 작성/수정
               </button>
+
+              <!--/* 해당 주문의 상품 정보들을 숨은 태그로 저장 */-->
+              <div th:id="|order-items-data-${order.id}|" class="d-none">
+                <span th:each="oi : ${order.orderItems}"
+                      class="order-item-meta"
+                      th:data-id="${oi.id}"
+                      th:data-name="${oi.product.name}">
+                </span>
+              </div>
             </div>
             <a th:href="@{|/order/${order.id}|}" class="btn btn-outline-secondary btn-sm">상세보기</a>
             <span th:if="${order.status == '주문완료'}" class="badge bg-primary fs-6 d-inline-flex align-items-center">주문완료</span>
@@ -136,7 +144,6 @@
               </span>
               <i th:if="${#lists.size(order.orderItems) > 1}" class="bi bi-chevron-down fs-5 order-arrow" th:id="|order-arrow-${order.id}|"></i>
             </div>
-
           </div>
 
           <!-- 펼쳤을 때 표시 -->
@@ -220,26 +227,30 @@
     </div>
   </div>
 
-  <!--/* 후기 작성 모달창 */-->
+  <!--/* 후기 작성/수정 모달창 */-->
   <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
-        <form th:action="@{/reviews}" method="post">
+        <form id="reviewForm" th:action="@{/reviews}" method="post" enctype="multipart/form-data">
           <div class="modal-header">
-            <h5 class="modal-title fw-bold">상품 후기 작성</h5>
+            <h5 class="modal-title fw-bold" id="modalTitle">상품 후기 작성</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
+            <!--/* 작성용 orderItemId & 수정용 reviewId */-->
             <input type="hidden" name="orderItemId" id="modalOrderItemId">
+            <input type="hidden" name="reviewId" id="modalReviewId">
 
+            <!--/* 1. 후기 대상 상품 선택 영역 */-->
             <div class="mb-3">
-              <label class="form-label text-muted small mb-1">상품명</label>
-              <div id="modalProductName" class="fw-bold text-dark fs-6"></div>
+              <label for="modalProductSelect" class="form-label fw-bold small">후기 작성 대상 상품</label>
+              <select id="modalProductSelect" class="form-select"></select>
             </div>
 
+            <!--/* 2. 평점 선택 */-->
             <div class="mb-3">
               <label class="form-label fw-bold">평점</label>
-              <select name="rating" class="form-select" required>
+              <select name="rating" id="modalRating" class="form-select" required>
                 <option value="5" selected>★★★★★ (5점 - 최고예요)</option>
                 <option value="4">★★★★☆ (4점 - 좋아요)</option>
                 <option value="3">★★★☆☆ (3점 - 보통이에요)</option>
@@ -248,15 +259,25 @@
               </select>
             </div>
 
+            <!--/* 3. 내용 입력 */-->
             <div class="mb-3">
               <label class="form-label fw-bold">후기 내용</label>
-              <textarea name="content" class="form-control" rows="4"
+              <textarea name="content" id="modalContent" class="form-control" rows="4"
                         placeholder="상품을 실제로 사용해 보신 솔직한 리뷰를 남겨주세요." required></textarea>
+            </div>
+
+            <!--/* 4. 사진 첨부 */-->
+            <div class="mb-3">
+              <label for="reviewImage" class="form-label fw-bold small">사진 첨부 (선택)</label>
+              <input class="form-control" type="file" id="reviewImage" name="reviewImage" accept="image/*">
+              <div id="currentImageNotice" class="small text-muted mt-1 d-none">
+                * 기존 등록된 사진이 있습니다. 새 사진을 등록하면 교체됩니다.
+              </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-0" data-bs-dismiss="modal">취소</button>
-            <button type="submit" class="btn btn-dark rounded-0">등록하기</button>
+            <button type="submit" id="btnSubmitReview" class="btn btn-dark rounded-0">등록하기</button>
           </div>
         </form>
       </div>
@@ -265,25 +286,5 @@
 
   <!--/* 하단: 풋터 */-->
   <th:block th:replace="~{module/footer.html}"></th:block>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const reviewModalEl = document.getElementById("reviewModal");
-      if (!reviewModalEl) return;
-      const reviewModal = new bootstrap.Modal(reviewModalEl);
-
-      document.querySelectorAll(".btnOpenReviewModal").forEach(button => {
-        button.addEventListener("click", function () {
-          const orderItemId = this.dataset.orderitemId;
-          const productName = this.dataset.productName;
-
-          document.getElementById("modalOrderItemId").value = orderItemId;
-          document.getElementById("modalProductName").textContent = productName;
-
-          reviewModal.show();
-        });
-      });
-    });
-  </script>
 </body>
 </html>

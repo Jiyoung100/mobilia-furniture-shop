@@ -299,13 +299,23 @@
                                 <p class="card-text text-dark lh-base mb-0"
                                    th:text="${review.content}"
                                    style="white-space: pre-line; word-break: break-word;"></p>
+
+                                <!--/* 첨부 이미지가 있는 경우 썸네일 출력 */-->
+                                <div th:if="${review.reviewImage != null and !#strings.isEmpty(review.reviewImage)}" class="mt-3">
+                                    <a th:href="@{|/images/${review.reviewImage}|}" target="_blank">
+                                        <img th:src="@{|/images/${review.reviewImage}|}"
+                                             alt="구매 후기 이미지"
+                                             class="img-thumbnail rounded-2"
+                                             style="width: 120px; height: 120px; object-fit: cover; cursor: pointer;">
+                                    </a>
+                                </div>
                             </div>
 
                             <!--/* 카드 푸터: 추천/댓글 기능 */-->
                             <div class="card-footer bg-white border-top px-3 py-3">
-                                <!-- 추천 / 댓글 개수 -->
+                                <!--/* 추천 / 댓글 개수 */-->
                                 <div class="d-flex align-items-center gap-3 mb-3">
-                                    <!-- 다른 사람의 후기: 추천 가능 -->
+                                    <!--/* 다른 사람의 후기: 추천 가능 */-->
                                     <form th:if="${#authentication.name != 'anonymousUser' && #authentication.name != review.customer.customerId}"
                                           th:action="@{|/reviews/${review.id}/recommend|}" method="post" class="m-0 recommend-form">
 
@@ -316,10 +326,9 @@
                                             추천
                                             <span class="recommend-count" th:text="${recommendCountMap[review.id]}">0</span>
                                         </button>
-
                                     </form>
 
-                                    <!-- 본인 후기: 추천 개수만 표시하고 클릭 불가 -->
+                                    <!--/* 본인 후기: 추천 개수만 표시하고 클릭 불가 */-->
                                     <button th:if="${#authentication.name == review.customer.customerId}" type="button"
                                             class="btn btn-sm btn-outline-primary" disabled>
                                         <i class="bi bi-hand-thumbs-up"></i>
@@ -327,7 +336,7 @@
                                         <span th:text="${recommendCountMap[review.id]}">0</span>
                                     </button>
 
-                                    <!-- 댓글 버튼 -->
+                                    <!--/* 댓글 버튼 */-->
                                     <button type="button" class="btn btn-sm btn-outline-secondary comment-toggle-btn" data-bs-toggle="collapse"
                                             th:attr="data-bs-target=|#review-comments-${review.id}|, aria-controls=|review-comments-${review.id}|"
                                             aria-expanded="false">
@@ -335,18 +344,18 @@
                                         댓글
                                         <span th:text="${#lists.size(commentMap[review.id])}">0</span>
                                     </button>
-
                                 </div>
-                                <!-- 댓글 영역 -->
+
+                                <!--/* 댓글 영역 */-->
                                 <div class="collapse mt-3"
                                      th:id="|review-comments-${review.id}|">
-                                    <!-- 댓글 목록 -->
+                                    <!--/* 댓글 목록 */-->
                                     <div th:if="${!#lists.isEmpty(commentMap[review.id])}" class="border-top">
                                         <div th:each="comment : ${commentMap[review.id]}"
                                              class="py-3 border-bottom">
                                             <div class="d-flex justify-content-between align-items-start">
                                                 <div class="flex-grow-1">
-                                                    <!-- 댓글 작성자 -->
+                                                    <!--/* 댓글 작성자 */-->
                                                     <div class="d-flex align-items-center gap-2 mb-1">
                                                         <span class="fw-bold small"
                                                               th:with="cid=${comment.customer.customerId}"
@@ -360,24 +369,24 @@
                                                         </span>
                                                     </div>
 
-                                                    <!-- 댓글 내용 -->
+                                                    <!--/* 댓글 내용 */-->
                                                     <div th:text="${comment.content}"
                                                          style="white-space: pre-line; word-break: break-word;">
                                                     </div>
                                                 </div>
 
-                                                <!-- 본인 댓글만 수정 / 삭제 -->
+                                                <!--/* 본인 댓글만 수정 / 삭제 */-->
                                                 <div th:if="${#authentication.name == comment.customer.customerId}"
                                                      class="d-flex gap-2 comment-actions">
 
-                                                    <!-- 댓글 수정 -->
+                                                    <!--/* 댓글 수정 */-->
                                                     <button type="button" class="btn btn-sm comment-edit-btn" data-bs-toggle="collapse"
                                                             th:attr="data-bs-target=|#comment-edit-${comment.id}|">
                                                         <i class="bi bi-pencil"></i>
                                                         수정
                                                     </button>
 
-                                                    <!-- 댓글 삭제 -->
+                                                    <!--/* 댓글 삭제 */-->
                                                     <form th:action="@{|/review-comments/${comment.id}/delete|}"
                                                           method="post" class="m-0" onsubmit="return confirm('댓글을 삭제하시겠습니까?');">
                                                         <button type="submit" class="btn btn-sm comment-delete-btn">
@@ -388,7 +397,7 @@
                                                 </div>
                                             </div>
 
-                                            <!-- 댓글 수정 폼 -->
+                                            <!--/* 댓글 수정 폼 */-->
                                             <div class="collapse mt-2"
                                                  th:id="|comment-edit-${comment.id}|">
                                                 <form th:action="@{|/review-comments/${comment.id}/update|}" method="post" class="d-flex gap-2">
@@ -402,7 +411,7 @@
                                         </div>
                                     </div>
 
-                                    <!-- 댓글 작성 -->
+                                    <!--/* 댓글 작성 */-->
                                     <form th:if="${#authentication.name != 'anonymousUser'}" th:action="@{|/reviews/${review.id}/comments|}"
                                           method="post" class="d-flex gap-2 mt-3">
                                         <input type="text" name="content" class="form-control" placeholder="댓글을 입력해주세요." style="height: 44px;" required>
@@ -412,7 +421,7 @@
                                         </button>
                                     </form>
 
-                                    <!-- 비회원 -->
+                                    <!--/* 비회원 */-->
                                     <div th:if="${#authentication.name == 'anonymousUser'}" class="small text-muted mt-3">
                                         댓글 작성은 <a th:href="@{/login}">로그인</a> 후 이용할 수 있습니다.
                                     </div>
@@ -431,9 +440,7 @@
 <script>
     function addToCart(event, form) {
         event.preventDefault(); // 기본 폼 제출 방지 (새로고침 방지)
-
         const customerId = form.customerId.value;
-
         // 비회원인 경우 로그인 페이지로 이동
         if (!customerId || customerId === "anonymousUser") {
             alert("로그인 후 이용해주세요.");
@@ -468,7 +475,6 @@
             });
     }
     document.querySelectorAll(".recommend-form").forEach(function(form) {
-
         form.addEventListener("submit", function(e) {
             e.preventDefault();
             toggleRecommend(form);
@@ -477,7 +483,6 @@
     });
 
     function toggleRecommend(form) {
-
         const button = form.querySelector("button");
         const icon = button.querySelector("i");
         const count = button.querySelector(".recommend-count");
@@ -503,7 +508,6 @@
 
                     button.classList.remove("btn-outline-primary");
                     button.classList.add("btn-primary");
-
                     icon.classList.remove("bi-hand-thumbs-up");
                     icon.classList.add("bi-hand-thumbs-up-fill");
 
@@ -511,7 +515,6 @@
 
                     button.classList.remove("btn-primary");
                     button.classList.add("btn-outline-primary");
-
                     icon.classList.remove("bi-hand-thumbs-up-fill");
                     icon.classList.add("bi-hand-thumbs-up");
                 }
