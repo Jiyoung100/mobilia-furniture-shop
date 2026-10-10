@@ -4,11 +4,58 @@
 
 	<script>
 		$(document).ready(() => {
-			let slider = $('.slider').bxSlider({
-				slideWidth: 280,
-				minSlides: 2,
-				maxSlides: 5,
-				slideMargin: 24,
+			const $section = $('.related-product');
+			const $list = $section.find('.slider');
+
+			if (!$list.length || !$list.children().length) return;
+
+			const itemCount = $list.children().length;
+			const slideWidth = 280;
+			const slideMargin = 24;
+			const minSlides = Math.min(2, itemCount);
+			const maxSlides = Math.min(5, itemCount);
+
+			let slider;
+
+			function getTotalPages() {
+				const viewportWidth = $list.closest('.bx-viewport').width();
+
+				const minWidth = minSlides * slideWidth + (minSlides - 1) * slideMargin;
+				const maxWidth = maxSlides * slideWidth + (maxSlides - 1) * slideMargin;
+
+				let visibleCount;
+
+				if (viewportWidth < minWidth) {
+					visibleCount = minSlides;
+				} else if (viewportWidth > maxWidth) {
+					visibleCount = maxSlides;
+				} else {
+					const itemWidth = $list.children().first().width();
+
+					visibleCount = Math.floor(
+							(viewportWidth + slideMargin) /
+							(itemWidth + slideMargin)
+					);
+				}
+
+				return Math.ceil(itemCount / Math.max(1, visibleCount));
+			}
+
+			function updatePage() {
+				if (!slider) return;
+
+				$section.find('.current-page')
+						.text(slider.getCurrentSlide() + 1);
+
+				$section.find('.total-page')
+						.text(getTotalPages());
+			}
+
+			slider = $list.bxSlider({
+				slideWidth: slideWidth,
+				minSlides: minSlides,
+				maxSlides: maxSlides,
+				slideMargin: slideMargin,
 				moveSlides: 0,
 				shrinkItems: true,
 				controls: true,
@@ -17,42 +64,38 @@
 				infiniteLoop: false,
 				touchEnabled: false,
 
+				onSliderLoad: function() {
+					// 초기화가 끝난 다음 페이지 수 갱신
+					setTimeout(updatePage, 0);
+				},
+
 				onSlideAfter: function() {
-					$('.current-page').text(slider.getCurrentSlide() + 1);
-					$('.total-page').text(slider.getPagerQty());
+					updatePage();
+				},
+
+				onSliderResize: function() {
+					setTimeout(updatePage, 0);
 				}
 			});
 
-			$('.current-page').text(slider.getCurrentSlide() + 1);
-			$('.total-page').text(slider.getPagerQty());
-
-			$('.related-product .bx-next').off('click').on('click', function(e) {
+			$section.find('.bx-next').off('click').on('click', function(e) {
 				e.preventDefault();
 
-				if(slider.getCurrentSlide() === slider.getPagerQty() - 1) {
+				if (slider.getCurrentSlide() === getTotalPages() - 1) {
 					slider.goToSlide(0);
 				} else {
 					slider.goToNextSlide();
 				}
 			});
 
-			$('.related-product .bx-prev').off('click').on('click', function(e) {
+			$section.find('.bx-prev').off('click').on('click', function(e) {
 				e.preventDefault();
 
-				if(slider.getCurrentSlide() === 0) {
-					slider.goToSlide(
-							slider.getPagerQty() - 1
-					);
+				if (slider.getCurrentSlide() === 0) {
+					slider.goToSlide(getTotalPages() - 1);
 				} else {
 					slider.goToPrevSlide();
 				}
 			});
-
-			$(window).on('resize', function() {
-				$('.current-page').text(slider.getCurrentSlide() + 1);
-				$('.total-page').text(slider.getPagerQty());
-
-			});
-
 		});
 	</script>
