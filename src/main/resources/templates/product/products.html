@@ -54,8 +54,11 @@
 
     <div class="wrapper">
         <!--/* 공간별 가구 카테고리 */-->
-        <div class="container py-5 mt-5">
-            <h3 class="fw-bold text-center mb-4">공간별 가구</h3>
+        <div class="container py-4 py-md-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold mb-2">공간별 가구</h3>
+                <p class="text-muted small">공간에 맞는 가구를 찾아보세요</p>
+            </div>
             <div class="row text-center g-1">
                 <div class="col-3 col-xl category-box">
                     <a th:href="@{/products/category/거실}" class="text-decoration-none text-dark">
@@ -124,11 +127,11 @@
             </div>
         </div>
 
-        <!-- 중단: 상품 진열 -->
-        <div class="container py-5 mt-5 new-product-slider">
-            <div class="d-flex align-items-center mb-3">
-                <h3 class="fw-bold">새로 나온 상품</h3>
-                <a th:href="@{/products/new}" class="more-link ms-auto">더보기 +</a>
+        <!--/* 신상품 슬라이드 */-->
+        <div class="container new-product-slider py-4 py-md-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold mb-2">새로 나온 상품</h3>
+                <p class="text-muted small">새롭게 입고된 가구를 만나보세요</p>
             </div>
             <div class="swiper newProductSwiper">
                 <div class="swiper-wrapper">
@@ -139,6 +142,70 @@
             </div>
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
+            <div class="text-center mt-4">
+                <a th:href="@{producs/new}" class="btn btn-more">신상품 전체 보기 →</a>
+            </div>
+        </div>
+
+        <!--/* 브랜드별 가구 */-->
+        <div class="container brand-section py-4 py-md-5">
+            <div class="text-center mb-4">
+                <h3 class="fw-bold mb-2">브랜드별 가구</h3>
+                <p class="text-muted small">취향에 맞는 브랜드를 만나보세요</p>
+            </div>
+
+            <!--/* 브랜드 선택 버튼 */-->
+            <div class="d-flex align-items-center justify-content-center gap-3 mb-5 category-btn-wrap">
+                <button type="button" class="btn btn-secondary brand-tab" data-brand="ikea" aria-pressed="true">IKEA</button>
+                <button type="button" class="btn btn-outline-secondary brand-tab" data-brand="hanssem" aria-pressed="true">한샘</button>
+                <button type="button" class="btn btn-outline-secondary brand-tab" data-brand="livart" aria-pressed="true">리바트</button>
+                <button type="button" class="btn btn-outline-secondary brand-tab" data-brand="iloom" aria-pressed="true">일룸</button>
+            </div>
+
+            <!--/* IKEA */-->
+            <div class="brand-panel" data-brand="ikea">
+                <div class="row g-5 brand-products">
+                    <div th:each="product : ${ikeaProductList}" class="col-6 col-lg-3">
+                        <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                    </div>
+                </div>
+                <div class="brand-more text-center mt-4">
+                    <a th:href="@{/products/brand/IKEA}" class="btn btn-more">IKEA 전체 보기 →</a>
+                </div>
+            </div>
+            <!--/* 한샘 */-->
+            <div class="brand-panel" data-brand="hanssem" hidden>
+                <div class="row g-5 brand-products">
+                    <div th:each="product : ${hanssemProductList}" class="col-6 col-lg-3">
+                        <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                    </div>
+                </div>
+                <div class="brand-more text-center mt-4">
+                    <a th:href="@{/products/brand/한샘}" class="btn btn-more">한샘 전체 보기 →</a>
+                </div>
+            </div>
+            <!--/* 리바트 */-->
+            <div class="brand-panel" data-brand="livart" hidden>
+                <div class="row g-5 brand-products">
+                    <div th:each="product : ${livartProductList}" class="col-6 col-lg-3">
+                        <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                    </div>
+                </div>
+                <div class="brand-more text-center mt-4">
+                    <a th:href="@{/products/brand/리바트}" class="btn btn-more">리바트 전체 보기 →</a>
+                </div>
+            </div>
+            <!--/* 일룸 */-->
+            <div class="brand-panel" data-brand="iloom" hidden>
+                <div class="row g-5 brand-products">
+                    <div th:each="product : ${iloomProductList}" class="col-6 col-lg-3">
+                        <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                    </div>
+                </div>
+                <div class="brand-more text-center mt-4">
+                    <a th:href="@{/products/brand/일룸}" class="btn btn-more">일룸 전체 보기 →</a>
+                </div>
+            </div>
         </div>
     </div>
 
