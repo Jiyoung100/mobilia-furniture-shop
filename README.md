@@ -9,13 +9,9 @@
 팀프로젝트 결과물을 개인 포트폴리오 목적으로 정리한 저장소입니다.<br> 
 상품 및 브랜드 데이터는 학습·시연용 더미 데이터입니다.
 
-## 기술 스택
-| 구분 | 기술 |
-|---|---|
-| Backend | Java, Spring Boot, Spring Security, Thymeleaf |
-| Frontend | HTML, CSS, JavaScript, Bootstrap |
-| Database | MySQL |
-| UI 라이브러리 | Swiper, bxSlider |
+## 포트폴리오
+프로젝트의 기획, 설계, 주요 기능 및 구현 과정은 아래 포트폴리오에서 자세히 확인할 수 있습니다.<br>
+[📑 포트폴리오 보기](docs/MOBILIA_portfolio.pdf)
 
 ## 주요 기능
 - **상품 탐색:** 전체 상품, 공간별 가구, 브랜드별 상품 조회 및 검색
@@ -32,30 +28,46 @@
 - 상품 목록 및 신상품 페이지 구성
 - 브랜드별 배너와 소개 문구 적용
 - 상품 상세페이지 정보 정렬 및 구매 영역 UI 개선
-- 평균 별점·후기 개수 표시 및 후기 영역 이동 링크 연결
 - 재고에 따른 품절 표시와 수량 입력 비활성화 처리
-- 관련 상품 슬라이더의 간격·글자 크기 및 페이지 표시 개선
 
 ### 공통 메뉴 및 관리자 화면
 - 모바일 상단 메뉴와 장바구니 배지 정렬 개선
 - 관리자 모바일 상단바 및 메뉴 구성
 - 회원 정보 수정 화면의 공통 CSS 충돌 및 여백 수정
-- ADMIN·MANAGER의 상품 관리 접근 권한 설정 수정
 
 ## 화면 소개
 ### 메인 화면
-<img width="1481" height="2072" alt="localhost_8088_" src="https://github.com/user-attachments/assets/9ee5bee7-4cc5-44a4-8d9c-b0056ee1670b" />
+<img width="1654" height="3195" alt="localhost_8088_" src="https://github.com/user-attachments/assets/2b91ed38-0979-497c-9abe-0b461ec2ab68" />
 
 ### 상품 상세 화면
 <img width="1649" height="1309" alt="localhost_8088_products_detail_122" src="https://github.com/user-attachments/assets/4825c7ba-2de5-4d71-b20e-c05941f9229d" />
 
-### 관리자 화면
-![관리자 화면](docs/images/admin.png)
+## 기술 스택
+#### Backend
+![Java](https://img.shields.io/badge/Java-ED8B00?style=flat-square)
+![Spring Boot](https://img.shields.io/badge/Spring_Boot-6DB33F?style=flat-square&logo=springboot&logoColor=white)
+![Spring Security](https://img.shields.io/badge/Spring_Security-6DB33F?style=flat-square&logo=springsecurity&logoColor=white)
+![Spring Data JPA](https://img.shields.io/badge/Spring_Data_JPA-6DB33F?style=flat-square)
+![Thymeleaf](https://img.shields.io/badge/Thymeleaf-005F0F?style=flat-square&logo=thymeleaf&logoColor=white)
+#### Frontend
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=flat-square&logo=bootstrap&logoColor=white)
+#### Database
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+#### Deployment
+![AWS Lightsail](https://img.shields.io/badge/AWS_Lightsail-FF9900?style=flat-square)
+![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=flat-square&logo=ubuntu&logoColor=white)
+#### Tools
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJ_IDEA-000000?style=flat-square&logo=intellijidea&logoColor=white)
+![MySQL Workbench](https://img.shields.io/badge/MySQL_Workbench-4479A1?style=flat-square&logo=mysql&logoColor=white)
 
-
+<!--
 ## 팀원별 역할
 | 팀원 | 담당 |
 |---|---|
 | [본인 이름] | [담당 기능] |
 | [팀원 이름] | [담당 기능] |
 | [팀원 이름] | [담당 기능] |
+-->
