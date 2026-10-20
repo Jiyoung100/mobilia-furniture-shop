@@ -3,14 +3,18 @@ body {
     color: #222;
     background-color: #f8f9fa;
 }
-.admin-layout {
-    display: flex;
-}
+.admin-layout { display: flex; }
 .admin-layout > header { margin-bottom: 60px; }
 .admin-layout > header h1 {
     margin: 0;
     font-size: 50px;
     text-align: center;
+}
+.wrapper { width: 100%; max-width: 1200px; padding: 40px; margin: 0 auto; }
+.wrapper > h3 {
+    text-align: left;
+    margin: 20px 0 40px 0;
+    font-weight: bold;
 }
 table {
     width: 100%;
@@ -38,7 +42,8 @@ table input[type="checkbox"] {
     height: 16px;
     cursor: pointer;
 }
-table td:last-child a {
+table td:last-child a,
+table td:last-child button {
     display: inline-block;
     padding: 6px 12px;
     border: 1px solid #d0d0d0;
@@ -47,14 +52,18 @@ table td:last-child a {
     color: #333333;
     text-decoration: none;
     font-size: 12px;
+    cursor: pointer;
+    vertical-align: middle;
 }
-table td:last-child a:hover { background-color: #f3f3f3; }
-.wrapper { width: 100%; padding: 40px; margin: 0 auto; }
-.wrapper > h3 {
-    text-align: left;
-    margin: 20px 0 40px 0;
-    font-weight: bold;
+table td:last-child a:hover,
+table td:last-child button:hover { background-color: #f3f3f3; }
+table td:last-child button.single-delete-btn {
+    color: #ff4d4f;
+    border-color: #ff8080;
+    margin-left: 4px;
 }
+table td:last-child button.single-delete-btn:hover { background-color: #fff2f2; }
+table td:last-child { white-space: nowrap; }
 .section01 {
     padding: 15px 20px;
     margin-bottom: 20px;
@@ -76,6 +85,7 @@ table td:last-child a:hover { background-color: #f3f3f3; }
     outline: none;
     font-size: 13px;
 }
+.section01 input:focus, .section01 select:focus { border-color: #4c78ff; }
 .searchBox05 {
     display: flex;
     justify-content: flex-end;
@@ -136,9 +146,9 @@ table td:last-child a:hover { background-color: #f3f3f3; }
     color: #ff4d4f;
     border-color: #ff8080;
 }
-.section02 > div:nth-child(2) {
-    margin-bottom: 15px;
-    font-size: 0.8em;
+.section02 > .list-summary {
+    margin-bottom: 10px;
+    font-size: 0.85em;
     font-weight: bold;
 }
 .section02 > div:nth-child(2) > span:nth-child(2) {
@@ -170,6 +180,7 @@ table td:last-child a:hover { background-color: #f3f3f3; }
     text-decoration: none;
 }
 .manage-actions a:hover { background-color: #2858d8; }
+.manage-actions select:focus { border-color: #4c78ff; }
 .section02 .delete-all-button {
     border-color: #ff8080;
     color: #ff4d4f;
@@ -179,7 +190,7 @@ table td:last-child a:hover { background-color: #f3f3f3; }
     background-color: #ffffff;
     color: #ff4d4f;
 }
-.section02 > div:nth-child(2) {
+.table-scroll {
     width: 100%;
     overflow-x: auto;
 }
@@ -191,6 +202,23 @@ table td:last-child a:hover { background-color: #f3f3f3; }
     margin: 0;
     font-size: 14px;
     font-weight: bold;
+}
+.manage-actions select {
+    height: 36px;
+    padding: 0 12px;
+    border: 1px solid #c8c8c8;
+    border-radius: 4px;
+    background-color: #ffffff;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+.current-page-info {
+    text-align: center;
+    font-size: 0.85em;
+    color: #999;
+    margin-top: -50px;
+    margin-bottom: 40px;
 }
 /* addProduct.html */
 label.control-label {

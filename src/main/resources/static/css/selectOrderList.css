@@ -1,66 +1,17 @@
-body {
-    margin: 0;
-    color: #222;
-    background-color: #f8f9fa;
-}
-.admin-layout { display: flex; }
-.admin-layout > header { margin-bottom: 60px; }
-.admin-layout > header h1 {
-    margin: 0;
-    font-size: 50px;
-    text-align: center;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 13px;
-    background-color: #ffffff;
-}
-th, td { border: 1px solid #e5e5e5; }
-th {
-    padding: 12px 10px;
-    color: #555555;
-    font-size: 12px;
-    font-weight: 600;
-    text-align: center;
-    vertical-align: middle;
-}
 table > tbody > tr:first-child,
 table tr:first-child {
     background-color: #f7f7f8;
 }
-td {
-    padding: 10px;
-    border: 1px solid #eeeeee;
-    text-align: center;
-    vertical-align: middle;
-}
-
 table tr:first-child th:nth-child(1) { width: 6%; }
 table tr:first-child th:nth-child(2) { width: 10%; }
 table tr:first-child th:nth-child(3) { width: 7%; }
-table tr:first-child th:nth-child(4) { width: 7%; }
-table tr:first-child th:nth-child(5) { width: 22%; }
-table tr:first-child th:nth-child(6) { width: 10%; }
-table tr:first-child th:nth-child(7) { width: 9%; }
-table tr:first-child th:nth-child(8) { width: 7%; }
-table tr:first-child th:nth-child(9) { width: 7%; }
-table tr:first-child th:nth-child(10) { width: 10%; }
-table tr:first-child th:nth-child(11) { width: 5%; }
+table tr:first-child th:nth-child(4) { width: 22%; }
+table tr:first-child th:nth-child(5) { width: 9%; }
+table tr:first-child th:nth-child(6) { width: 7%; }
+table tr:first-child th:nth-child(7) { width: 7%; }
+table tr:first-child th:nth-child(8) { width: 10%; }
+table tr:first-child th:nth-child(9) { width: 5%; }
 
-.wrapper { padding: 40px; width: 100% }
-.wrapper > h3 {
-    text-align: left;
-    margin: 20px 0 40px 0;
-    font-weight: bold;
-}
-.section01 {
-    padding: 15px 20px;
-    margin-bottom: 20px;
-    background-color: #ffffff;
-    border-radius: 12px;
-}
 .search-row {
     min-height: 48px;
     display: grid;
@@ -81,76 +32,10 @@ table tr:first-child th:nth-child(11) { width: 5%; }
     flex-shrink: 0;
 }
 .section01 input, .section01 select {
-    height: 34px;
-    padding: 0 12px;
-    border: 1px solid #c8c8c8;
-    border-radius: 4px;
-    background-color: #ffffff;
-    outline: none;
-    font-size: 13px;
     flex: 1;
     max-width: 320px;
 }
-.section01 input:focus, .section01 select:focus {
-    border-color: #4c78ff;
-}
-.search-item select {
-    cursor: pointer;
-}
-.searchBox05 {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 8px;
-    padding-top: 12px;
-}
-.searchBox05 button {
-    min-width: 70px;
-    height: 34px;
-    padding: 0 15px;
-    border: 1px solid #d5d5d5;
-    border-radius: 4px;
-    background-color: #ffffff;
-    font-size: 13px;
-    cursor: pointer;
-}
-.searchBox05 a {
-    min-width: 70px;
-    height: 34px;
-    padding: 0 15px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid #d5d5d5;
-    border-radius: 4px;
-    background-color: #ffffff;
-    color: #333333;
-    font-size: 13px;
-    text-decoration: none;
-}
-.searchBox05 button:last-child {
-    border-color: #4c78ff;
-    color: #3467ff;
-}
-.searchBox05 button:hover,
-.searchBox05 a:hover {
-    background-color: #f5f6f8;
-}
-
-.section02 {
-    padding: 15px;
-    background-color: #ffffff;
-    border-radius: 12px;
-}
-.section02 > div:first-child {
-    margin-bottom: 15px;
-    font-size: 0.85em;
-    font-weight: bold;
-}
-.section02 > div:nth-child(2) {
-    width: 100%;
-    overflow-x: auto;
-}
+.search-item select { cursor: pointer; }
 
 .product-cell {
     text-align: left;
@@ -258,8 +143,7 @@ table tr:first-child th:nth-child(11) { width: 5%; }
     white-space: nowrap;
 }
 .btn-status-change:hover { background-color: #f2f5ff; }
-
-.btn-detail {
+table td:last-child a.btn-detail {
     display: inline-block;
     padding: 4px 8px;
     font-size: 12px;
@@ -272,14 +156,7 @@ table tr:first-child th:nth-child(11) { width: 5%; }
     transition: all 0.2s ease;
     white-space: nowrap;
 }
-.btn-detail:hover {
+table td:last-child a.btn-detail:hover {
     background-color: #e9ecef;
     color: #212529;
-}
-.current-page-info {
-    text-align: center;
-    font-size: 0.85em;
-    color: #999;
-    margin-top: -50px;
-    margin-bottom: 40px;
 }

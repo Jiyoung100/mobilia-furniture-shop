@@ -1,15 +1,29 @@
-.wrapper {
-    width: 900px;
+@media (max-width: 767.98px) {
+    .wrapper.customer-form-wrapper {
+        margin: 40px auto;
+    }
+    .customer-form-wrapper .signup-box {
+        flex-direction: column;
+    }
+    .customer-form-wrapper .input-box {
+        width: 100%;
+        min-width: 0;
+    }
+}
+.wrapper.customer-form-wrapper {
+    width: calc(100% - 40px);
+    max-width: 900px;
     margin: 70px auto;
     padding: 0;
+    box-sizing: border-box;
 }
-.wrapper h2 {
+.customer-form-wrapper h2 {
     margin-bottom: 10px;
     font-size: 28px;
     font-weight: bold;
     text-align: center;
 }
-.wrapper h5 {
+.customer-form-wrapper h5 {
     margin-bottom: 50px;
     text-align: center;
     color: #888;
@@ -17,15 +31,15 @@
     font-weight: normal;
 }
 
-.signup-section { margin-bottom: 50px; }
-.signup-section h3 {
+.customer-form-section { margin-bottom: 50px; }
+.customer-form-section h3 {
     margin-bottom: 30px;
     padding-bottom: 15px;
     border-bottom: 1px solid #ddd;
     font-size: 18px;
     font-weight: bold;
 }
-.signup-box { display: flex; justify-content: space-between; }
+.customer-form-box { display: flex; justify-content: space-between; }
 
 .input-box { width: 48%; margin-bottom: 22px; }
 .input-box > label {

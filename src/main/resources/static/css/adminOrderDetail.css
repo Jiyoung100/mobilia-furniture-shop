@@ -1,13 +1,4 @@
-.admin-layout {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f8f9fa;
-}
-.wrapper {
-    padding: 40px;
-    width: 100%;
-    max-width: 1200px;
-}
+.admin-layout { min-height: 100vh; }
 .detail-header-row {
     display: flex;
     justify-content: space-between;

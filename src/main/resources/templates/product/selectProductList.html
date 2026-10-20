@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <title>전체 상품</title>
     <th:block th:replace="~{module/link.html}"></th:block>
-    <link rel="stylesheet" th:href="@{/css/selectProductList.css}">
+    <link rel="stylesheet" th:href="@{/css/adminCommon.css}">
     <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
+    <link rel="stylesheet" th:href="@{/css/selectProductList.css}">
     <script th:src="@{/js/selectProductList.js}"></script>
 </head>
 <body>
@@ -51,17 +52,16 @@
                         <a th:href="@{/products/admin/add}">등록</a>
                     </div>
                 </div>
-                <div>
+                <div class="list-summary">
                     <span th:text="|[전체 상품 수 ${paging.totalElements}건]|"></span>
                 </div>
-                <div>
+                <div class="table-scroll">
                     <table>
                         <tr>
                             <th rowspan="2">
                                 <input type="checkbox" id="chkAll">
                             </th>
                             <th rowspan="2">번호</th>
-                            <th rowspan="2">제조국</th>
                             <th rowspan="2">상품코드</th>
                             <th rowspan="2">상품이미지</th>
                             <th rowspan="2">상품명</th>
@@ -83,7 +83,6 @@
                                        th:value="${product.id}">
                             </td>
                             <td th:text="${product.id}"></td>
-                            <td th:text="${product.country}"></td>
                             <td th:text="${product.productId}"></td>
                             <td>
                                 <a class="product-link"
