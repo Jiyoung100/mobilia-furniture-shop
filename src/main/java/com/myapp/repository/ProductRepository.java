@@ -16,6 +16,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     // 메인 페이지 - 신제품 슬라이드
     List<Product> findTop10ByOrderByRegDateDesc();
 
+    // 메인 페이지 - 브랜드별 슬라이드 : 해당 브랜드의 최신 상품 8개 조회
+    List<Product> findTop8ByBrandOrderByRegDateDesc(String brand);
+
     // name 또는 category1 또는 category2에 키워드가 포함된 상품 목록 조회
     Page<Product> findByNameContainingOrCategory2Containing(String name, String category1, String category2, Pageable pageable);
 

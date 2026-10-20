@@ -44,3 +44,29 @@ const newProductSwiper = new Swiper(".newProductSwiper", {
         }
     }
 });
+
+// 브랜드별 가구 버튼 이벤트
+document.querySelectorAll(".brand-section").forEach(section => {
+    const buttons = document.querySelectorAll(".brand-tab");
+    const panels = document.querySelectorAll(".brand-panel");
+
+    buttons.forEach(button => {
+        button.addEventListener("click", () => {
+            const selectedBrand = button.dataset.brand;
+
+            // 선택한 버튼의 색상 변경
+            buttons.forEach(tab => {
+                const isSelected = tab === button;
+
+                tab.classList.toggle("btn-secondary", isSelected);
+                tab.classList.toggle("btn-outline-secondary", !isSelected);
+                tab.setAttribute("aria-pressed", String(isSelected));
+            });
+
+            // 선택한 브랜드의 상품 영역 표시
+            panels.forEach(panel => {
+                panel.hidden = panel.dataset.brand !== selectedBrand;
+            });
+        })
+    })
+})

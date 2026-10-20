@@ -25,8 +25,6 @@
     }
 }
 
-.more-link:hover { font-weight: 700; }
-
 /* 공간별 카테고리 */
 .category-img-box {
     width: 120px;
@@ -69,3 +67,17 @@
 }
 .new-product-slider:hover .swiper-button-next { right: -10px; }
 .new-product-slider:hover .swiper-button-prev { left: -10px; }
+
+/* 전체보기 버튼 */
+.btn-more {
+    width: 200px;
+    font-size: 16px;
+    padding: 10px 0;
+    border-radius: 0;
+    color: #999;
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+.btn-more:hover {
+    border: 1px solid #222;
+}

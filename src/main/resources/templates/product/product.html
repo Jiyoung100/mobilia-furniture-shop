@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <th:block th:replace="~{/module/link.html}"></th:block>
-    <th:block th:replace="~{/module/bxslider}"></th:block>
+    <th:block th:replace="~{module/link.html}"></th:block>
+    <th:block th:replace="~{module/bxslider}"></th:block>
     <link rel="stylesheet" th:href="@{/css/product.css}">
     <script th:src="@{/js/product.js}"></script>
     <title th:text="${product.name}">상품 상세</title>
@@ -12,7 +12,7 @@
 <body>
 <div class="container-fluid">
     <!--/* 상단: 메뉴 */-->
-    <th:block th:replace="~{/module/header.html}"></th:block>
+    <th:block th:replace="~{module/header.html}"></th:block>
 
     <div class="wrapper">
         <div class="row align-items-stretch">
@@ -435,7 +435,7 @@
     </div>
 
     <!--/* 하단: 풋터 */-->
-    <th:block th:replace="~{/module/footer.html}"></th:block>
+    <th:block th:replace="~{module/footer.html}"></th:block>
 </div>
 <script>
     function addToCart(event, form) {

@@ -21,6 +21,10 @@ public class MainController {
         List<Product> newProductList = productService.getNewProductList();
 
         model.addAttribute("newProductList", newProductList);
-        return "/product/products";
+        model.addAttribute("ikeaProductList", productService.getBrandProductList("IKEA"));
+        model.addAttribute("hanssemProductList", productService.getBrandProductList("한샘"));
+        model.addAttribute("iloomProductList", productService.getBrandProductList("일룸"));
+        model.addAttribute("livartProductList", productService.getBrandProductList("리바트"));
+        return "product/products";
     }
 }

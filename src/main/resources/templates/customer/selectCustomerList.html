@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>전체 회원</title>
-    <th:block th:replace="~{/module/link.html}"></th:block>
+    <th:block th:replace="~{module/link.html}"></th:block>
     <link rel="stylesheet" th:href="@{/css/selectCustomerList.css}">
     <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
     <script th:src="@{/js/selectCustomerList.js}"></script>
@@ -11,7 +11,7 @@
 <body>
     <div class="admin-layout">
         <!--/* 왼쪽 : 사이드바 */-->
-        <th:block th:replace="~{/module/adminSidebar.html}"></th:block>
+        <th:block th:replace="~{module/adminSidebar.html}"></th:block>
         <article class="wrapper">
             <h3>전체 회원 목록</h3>
             <form class="section01 shadow-sm" th:action="@{/customers/admin/list}" method="get">
@@ -132,7 +132,7 @@
             </form>
             <!--/* 페이지네이션 */-->
             <th:block th:with="queryParams=|&startDate=${startDate}&endDate=${endDate}&name=${name}&productId=${productId}&country=${country}|">
-                <th:block th:replace="~{/module/pagination :: pagination(${paging}, '/products/admin/list', ${queryParams})}"></th:block>
+                <th:block th:replace="~{module/pagination :: pagination(${paging}, '/products/admin/list', ${queryParams})}"></th:block>
             </th:block>
             <div class="current-page-info" th:if="${paging != null and !paging.isEmpty()}">
                 <span th:text="|현재 페이지 ${paging.number + 1}/${paging.totalPages}페이지|"></span>

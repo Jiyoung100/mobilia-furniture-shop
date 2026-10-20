@@ -35,6 +35,9 @@ public class ProductService {
     // [ 메인 페이지 ] - 신제품 슬라이드
     public List<Product> getNewProductList(){ return productRepository.findTop10ByOrderByRegDateDesc(); }
 
+    // [ 메인 페이지 ] - 브랜드별 슬라이드
+    public List<Product> getBrandProductList(String brand) { return productRepository.findTop8ByBrandOrderByRegDateDesc(brand); }
+
     // [ 신상품 페이지 ]
     public List<Product> getNewProduct(){ return productRepository.findTop16ByOrderByRegDateDesc(); }
 

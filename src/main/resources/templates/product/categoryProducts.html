@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <th:block th:replace="~{/module/link.html}"></th:block>
+    <th:block th:replace="~{module/link.html}"></th:block>
     <script th:src="@{/js/sort.js}"></script>
     <title>공간별 가구</title>
 </head>
 <body>
     <!-- 상단: 메뉴 -->
-    <th:block th:replace="~{/module/header.html}"></th:block>
+    <th:block th:replace="~{module/header.html}"></th:block>
 
     <!-- 중단: 상품 진열 -->
     <div class="wrapper py-5 mt-3">
@@ -38,17 +38,17 @@
         <div class="row g-5">
             <!--/* 상품 반복 출력 */-->
             <div th:each="product : ${paging}" class="col-6 col-lg-3">
-                <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                <th:block th:replace="~{module/productCard.html :: productCard(${product})}"></th:block>
             </div>
         </div>
     </div>
 
     <!--/* 페이징 바 */-->
     <th:block th:with="queryParams=${category2 != null && !category2.isEmpty() ? '&category2=' + category2 + '&sort=' + sort : '&sort=' + sort}">
-        <th:block th:replace="~{/module/Pagination :: pagination(${paging}, ${'/products/category/' + category1}, ${queryParams})}"></th:block>
+        <th:block th:replace="~{module/pagination :: pagination(${paging}, ${'/products/category/' + category1}, ${queryParams})}"></th:block>
     </th:block>
 
     <!--/* 하단: 풋터 */-->
-    <th:block th:replace="~{/module/footer.html}"></th:block>
+    <th:block th:replace="~{module/footer.html}"></th:block>
 </body>
 </html>

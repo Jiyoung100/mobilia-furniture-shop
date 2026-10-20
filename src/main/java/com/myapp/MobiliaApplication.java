@@ -14,10 +14,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootApplication
-public class Shop02Application {
+public class MobiliaApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Shop02Application.class, args);
+        SpringApplication.run(MobiliaApplication.class, args);
     }
 
     // 테스트용 : USER(5명), MANAGER(1명), ADMIN(1명)

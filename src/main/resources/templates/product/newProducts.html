@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <th:block th:replace="~{/module/link.html}"></th:block>
+    <th:block th:replace="~{module/link.html}"></th:block>
     <title>신상품</title>
 </head>
 <style>
@@ -17,7 +17,7 @@
 </style>
 <body>
 <!-- 상단: 메뉴 -->
-<th:block th:replace="~{/module/header.html}"></th:block>
+<th:block th:replace="~{module/header.html}"></th:block>
 
 <!-- 중단: 상품 진열 -->
 <div class="wrapper py-5 mt-3">
@@ -30,14 +30,14 @@
         <div class="row g-5">
             <!-- 상품 반복 출력 -->
             <div th:each="product : ${newProductList}" class="col-6 col-lg-3">
-                <th:block th:replace="~{/module/productCard.html :: productCard(${product})}"></th:block>
+                <th:block th:replace="~{module/productCard.html :: productCard(${product})}"></th:block>
             </div>
         </div>
     </div>
 </div>
 
 <!--/* 하단: 풋터 */-->
-<th:block th:replace="~{/module/footer.html}"></th:block>
+<th:block th:replace="~{module/footer.html}"></th:block>
 
 </body>
 </html>

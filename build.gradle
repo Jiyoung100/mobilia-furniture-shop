@@ -6,7 +6,7 @@ plugins {
 
 group = 'com.myapp'
 version = '0.0.1-SNAPSHOT'
-description = 'Shop02'
+description = 'Mobilia'
 
 java {
     toolchain {

@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>장바구니</title>
-    <th:block th:replace="~{/module/link.html}"></th:block>
+    <th:block th:replace="~{module/link.html}"></th:block>
     <link rel="stylesheet" th:href="@{/css/cart.css}">
     <script th:src="@{/js/cart.js}"></script>
 </head>
 <body>
     <!--/* 상단 메뉴 */-->
-    <th:block th:replace="~{/module/header.html}"></th:block>
+    <th:block th:replace="~{module/header.html}"></th:block>
 
     <!--/* 수량 변경 및 삭제 요청용 form */-->
     <form id="cartActionForm" method="post">
@@ -105,6 +105,6 @@
     </article>
 
     <!--/* 하단: 풋터 */-->
-    <th:block th:replace="~{/module/footer.html}"></th:block>
+    <th:block th:replace="~{module/footer.html}"></th:block>
 </body>
 </html>

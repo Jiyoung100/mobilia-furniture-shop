@@ -29,6 +29,11 @@ footer {
     border-top: 1px solid #eee;
     background-color: #fdfdfd;
 }
+.footer-wrapper {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
 
 /* 회사정보 */
 .section_Left .title img { width: 150px; margin-bottom: 20px; }

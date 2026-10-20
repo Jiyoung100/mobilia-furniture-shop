@@ -4,14 +4,14 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Q&A 관리</title>
-	<th:block th:replace="~{/module/link.html}"></th:block>
+	<th:block th:replace="~{module/link.html}"></th:block>
 	<link rel="stylesheet" th:href="@{/css/question.css}">
 	<link rel="stylesheet" th:href="@{/css/qna.css}">
 	<script th:src="@{/js/qna.js}"></script>
 </head>
 <body>
 	<!--/* 상단: 헤더 */-->
-	<th:block th:replace="~{/module/header.html}"></th:block>
+	<th:block th:replace="~{module/header.html}"></th:block>
 
 	<article class="question-wrapper">
 		<section class="question-title">
@@ -64,6 +64,6 @@
 	</article>
 
 	<!--/* 하단: 풋터 */-->
-	<th:block th:replace="~{/module/footer.html}"></th:block>
+	<th:block th:replace="~{module/footer.html}"></th:block>
 </body>
 </html>

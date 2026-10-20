@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>전체 주문</title>
-    <th:block th:replace="~{/module/link.html}"></th:block>
+    <th:block th:replace="~{module/link.html}"></th:block>
     <link rel="stylesheet" th:href="@{/css/selectOrderList.css}">
     <link rel="stylesheet" th:href="@{/css/adminSidebar.css}">
     <script th:src="@{/js/selectOrderList.js}"></script>
@@ -11,7 +11,7 @@
 <body>
 <div class="admin-layout">
     <!--/* 왼쪽 : 사이드바 */-->
-    <th:block th:replace="~{/module/adminSidebar.html}"></th:block>
+    <th:block th:replace="~{module/adminSidebar.html}"></th:block>
     <article class="wrapper">
         <h3>전체 주문 목록</h3>
         <form class="section01 shadow-sm" th:action="@{/orders/admin/list}" method="get">
@@ -139,7 +139,7 @@
 
         <!--/* 페이지네이션 */-->
         <th:block th:with="queryParams=|&orderId=${orderId != null ? orderId : ''}&receiverName=${receiverName}&receiverPhone=${receiverPhone}&deliveryStatus=${deliveryStatus}|">
-            <th:block th:replace="~{/module/pagination :: pagination(${paging}, '/orders/admin/list', ${queryParams})}"></th:block>
+            <th:block th:replace="~{module/pagination :: pagination(${paging}, '/orders/admin/list', ${queryParams})}"></th:block>
         </th:block>
         <div class="current-page-info" th:if="${paging != null and !paging.isEmpty()}">
             <span th:text="|현재 페이지 ${paging.number + 1}/${paging.totalPages}페이지|"></span>
