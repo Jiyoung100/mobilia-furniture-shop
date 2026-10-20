@@ -17,6 +17,7 @@ input::placeholder, textarea::placeholder { font-size: 13px; color: #aaa !import
     border: 1px solid #ddd;
     border-radius: 0;
     transition: all 0.2s ease;
+    white-space: nowrap;
 }
 .category-btn-wrap .btn:hover, .category-btn-wrap .btn-secondary {
     background-color: #552F13;
